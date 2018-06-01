@@ -1,0 +1,27 @@
+* {
+    padding: 0px;
+    margin: 0px;
+    font-family: sans-serif;
+}
+
+html {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: 100%;
+
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#004e92+0,000428+100 */
+    background: #004e92; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #004e92 0%, #000428 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #004e92 0%,#000428 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #004e92 0%,#000428 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#004e92', endColorstr='#000428',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+    color: white;
+}
