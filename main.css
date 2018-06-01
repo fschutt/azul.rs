@@ -1,12 +1,21 @@
+@font-face {
+    font-family: "Overpass";
+    src: url("./fonts/overpass/Overpass_Regular.ttf");
+}
+
+@font-face {
+    font-family: "SourceCodePro";
+    src: url("./fonts/source-code-pro/SourceCodePro-Regular.otf");
+}
 * {
     padding: 0px;
     margin: 0px;
-    font-family: sans-serif;
 }
 
 html {
     overflow-x: hidden;
     min-height: 100%;
+    font-family: sans-serif;
 }
 
 body {
@@ -14,7 +23,10 @@ body {
     flex-direction: row;
     align-items: flex-start;
     justify-content: center;
-
+    font-family: "Overpass";
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     width: 100%;
     height: 100%;
 
@@ -43,6 +55,7 @@ body > #center-horizontal-container > #section-1-splash {
 }
 
 .fade-in-down-on-load {
+    animation-timing-function: ease-out;
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
     -webkit-animation-fill-mode: both;
@@ -52,6 +65,7 @@ body > #center-horizontal-container > #section-1-splash {
 }
 
 .fade-in-up-on-load {
+    animation-timing-function: ease-out;
     -webkit-animation-duration: 1s;
     animation-duration: 1s;
     -webkit-animation-fill-mode: both;
@@ -92,18 +106,37 @@ body > #center-horizontal-container > #section-1-splash > #subtitle {
     margin-top: 3em;
 }
 
-body > #center-horizontal-container > #section-2-features {
-    animation-timing-function: ease-out;
-}
-
 body > #center-horizontal-container > #section-2-features > .feature {
     border-radius: 2em;
     background: white;
     color: black;
-    padding: 5em;
+    padding: 4em;
+    line-height: 1.75;
     -webkit-box-shadow: 0px 0px 200px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 200px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 200px 0px rgba(0,0,0,0.75);
+    position: relative;
+    margin-bottom: 4em;
+}
+
+body > #center-horizontal-container > #section-2-features > .feature > h3 {
+    font-size: 2em;
+}
+
+body > #center-horizontal-container > #section-2-features > .feature > ul {
+    padding-left: 2em;
+}
+
+.code-tag {
+    background: #efefef;
+    border-radius: 5px;
+    padding: 0px 5px;
+    font-family: "SourceCodePro", monospace;
+    font-size: 0.75em;
+}
+
+.code-tag .cl {
+    min-height: 0.75em;
 }
 
 @-webkit-keyframes fadeInDown {

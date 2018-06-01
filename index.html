@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>Azul GUI Framework</title>
+	<meta charset="utf-8"/>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<link rel="stylesheet" type="text/css" href="./main.css" />
 </head>
 <body>
@@ -62,16 +64,65 @@
 
 			<div id="subtitle" class="fade-in-up-on-load after-short-delay">
 				<h2>
-					A functional, MVVM-oriented GUI framework for rapid prototyping,
-					supported by the Mozilla WebRender rendering engine.
+					A free, functional, MVVM-oriented GUI framework for rapid prototyping of
+					desktop applications written in Rust, supported by the Mozilla WebRender rendering engine.
 				</h2>
 			</div>
 		</div>
+
 		<div id="section-2-features" class="fade-in-up-on-load after-longer-delay">
 			<div class="feature">
-				Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+				<h3>Features</h3>
+				<ul>
+					<li>Model-View-View-Model (MVVM) programming model</li>
+					<li>CSS 2.1-based CSS engine, support for many common CSS properties</li>
+					<li>SVG / 2D drawing helpers</li>
+					<li>Flexbox-based layout description</li>
+					<li>DOM-based stateless components</li>
+					<li>Stateless dynamic CSS properties</li>
+					<li>Async I/O helpers</li>
+					<li>OpenGL integration</li>
+					<li>Huge library of more than 50 common-use GUI widgets</li>
+					<li>Enables custom widgets via function composition</li>
+					<li>Single deployment binary, minimal binary size, CPU and RAM usage</li>
+					<li>Minimal redraw time (0.5 - 4ms), efficient state caching</li>
+				</ul>
+			</div>
+
+			<div class="feature">
+				<h3>Hello world</h3>
+				<div class="code-tag">
+					<div class="cl">extern crate azul;</div>
+					<div class="cl"></div>
+					<div class="cl">use azul::prelude::*;</div>
+				</div>
+			</div>
+
+			<div class="feature">
+				<h3>Supported CSS items</h3>
+				<ul>
+					<li><span class="code-tag">border-radius</span></li>
+					<li><span class="code-tag">background-color</span></li>
+					<li><span class="code-tag">border</span></li>
+					<li><span class="code-tag">background</span></li>
+					<li><span class="code-tag">font-size</span></li>
+					<li><span class="code-tag">font-family</span></li>
+					<li><span class="code-tag">box-shadow</span></li>
+					<li><span class="code-tag">line-height</span></li>
+					<li><span class="code-tag">width</span>, <span class="code-tag">min-width</span>, <span class="code-tag">max-width</span></li>
+					<li><span class="code-tag">height</span>, <span class="code-tag">min-height</span>, <span class="code-tag">max-height</span></li>
+					<li><span class="code-tag">overflow</span>, <span class="code-tag">overflow-x</span>, <span class="code-tag">overflow-y</span></li>
+					<li><span class="code-tag">align-items</span></li>
+					<li><span class="code-tag">flex-wrap</span></li>
+					<li><span class="code-tag">flex-direction</span></li>
+					<li><span class="code-tag">align-content</span></li>
+				</ul>
 			</div>
 		</div>
+
+		<footer class="fade-in-up-on-load after-longer-delay">
+			© 2017 Maps4Print Einzelunternehmung
+		</footer>
 	</div>
 </body>
 </html>
