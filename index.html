@@ -71,7 +71,7 @@
 		</div>
 
 		<div id="section-2-features" class="fade-in-up-on-load after-longer-delay">
-			<div class="feature">
+			<div class="feature" id="introduction">
 				<h3>Features</h3>
 				<ul>
 					<li>Model-View-View-Model (MVVM) programming model</li>
@@ -89,33 +89,76 @@
 				</ul>
 			</div>
 
-			<div class="feature">
+			<div class="feature" id="hello-world">
 				<h3>Hello world</h3>
-				<div class="code-tag">
+				<div class="ct padded-wide">
 					<div class="cl">extern crate azul;</div>
 					<div class="cl"></div>
 					<div class="cl">use azul::prelude::*;</div>
+					<div class="cl">use azul::widgets::*;</div>
+					<div class="cl"></div>
+					<div class="cl">struct MyDataModel {</div>
+					<div class="cl"><div class="tab"></div>/* your data model here */</div>
+					<div class="cl"><div class="tab"></div>counter: usize,</div>
+					<div class="cl">}</div>
+					<div class="cl"></div>
+					<div class="cl">impl Layout for MyDataModel {</div>
+					<div class="cl"></div>
+					<div class="cl"><div class="tab"></div>// note that the data model is immutable here</div>
+					<div class="cl"><div class="tab"></div>fn layout(&self, _window_id: WindowId) -> Dom&lt;Self&gt; {</div>
+					<div class="cl"></div>
+					<div class="cl"><div class="tab"></div><div class="tab"></div>let button = Dom::new(NodeType::Widget(</div>
+					<div class="cl"><div class="tab"></div><div class="tab"></div><div class="tab"></div>button(ButtonContent::Text("Update counter"))</div>
+					<div class="cl"><div class="tab"></div><div class="tab"></div><div class="tab"></div><div class="tab"></div>.with_id("my_awesome_button")</div>
+					<div class="cl"><div class="tab"></div><div class="tab"></div><div class="tab"></div><div class="tab"></div>.with_callback(On::MouseUp, update_counter)</div>
+					<div class="cl"><div class="tab"></div><div class="tab"></div>));</div>
+					<div class="cl"></div>
+					<div class="cl"><div class="tab"></div><div class="tab"></div>let label = Dom::new(NodeType::Label(format!("{}", self.counter)))</div>
+					<div class="cl"><div class="tab"></div><div class="tab"></div><div class="tab"></div><div class="tab"></div>.with_id("the_counter")</div>
+					<div class="cl"><div class="tab"></div><div class="tab"></div>));</div>
+					<div class="cl"></div>
+					<div class="cl"><div class="tab"></div><div class="tab"></div>Dom::new(NodeType::Div)</div>
+					<div class="cl"><div class="tab"></div><div class="tab"></div><div class="tab"></div>.with_child(button)</div>
+					<div class="cl"><div class="tab"></div><div class="tab"></div><div class="tab"></div>.with_child(label)</div>
+					<div class="cl"><div class="tab"></div>}</div>
+					<div class="cl">}</div>
+					<div class="cl"></div>
+					<div class="cl">// Callback that is called when the button was clicked</div>
+					<div class="cl">fn update_counter(app_state: &mut AppState&lt;MyDataModel&gt;, _event: WindowEvent) -> UpdateScreen {</div>
+					<div class="cl"><div class="tab"></div>app_state.data.modify(|data| data.counter += 1;);</div>
+					<div class="cl"><div class="tab"></div>UpdateScreen::Redraw</div>
+					<div class="cl">}</div>
+					<div class="cl"></div>
+					<div class="cl">fn main() {</div>
+					<div class="cl"></div>
+					<div class="cl"><div class="tab"></div>let css = Css::new_from_string("body { flex-direction: column; }").unwrap();</div>
+					<div class="cl"><div class="tab"></div>let mut app = App::new(MyDataModel { counter: 0 });</div>
+					<div class="cl"></div>
+					<div class="cl"><div class="tab"></div>app.create_window(WindowCreateOptions::default(), css).unwrap();</div>
+					<div class="cl"><div class="tab"></div>app.run();</div>
+					<div class="cl"></div>
+					<div class="cl">}</div>
 				</div>
 			</div>
 
-			<div class="feature">
+			<div class="feature" id="supported-css">
 				<h3>Supported CSS items</h3>
 				<ul>
-					<li><span class="code-tag">border-radius</span></li>
-					<li><span class="code-tag">background-color</span></li>
-					<li><span class="code-tag">border</span></li>
-					<li><span class="code-tag">background</span></li>
-					<li><span class="code-tag">font-size</span></li>
-					<li><span class="code-tag">font-family</span></li>
-					<li><span class="code-tag">box-shadow</span></li>
-					<li><span class="code-tag">line-height</span></li>
-					<li><span class="code-tag">width</span>, <span class="code-tag">min-width</span>, <span class="code-tag">max-width</span></li>
-					<li><span class="code-tag">height</span>, <span class="code-tag">min-height</span>, <span class="code-tag">max-height</span></li>
-					<li><span class="code-tag">overflow</span>, <span class="code-tag">overflow-x</span>, <span class="code-tag">overflow-y</span></li>
-					<li><span class="code-tag">align-items</span></li>
-					<li><span class="code-tag">flex-wrap</span></li>
-					<li><span class="code-tag">flex-direction</span></li>
-					<li><span class="code-tag">align-content</span></li>
+					<li><span class="ct">border-radius</span></li>
+					<li><span class="ct">background-color</span></li>
+					<li><span class="ct">border</span></li>
+					<li><span class="ct">background</span></li>
+					<li><span class="ct">font-size</span></li>
+					<li><span class="ct">font-family</span></li>
+					<li><span class="ct">box-shadow</span></li>
+					<li><span class="ct">line-height</span></li>
+					<li><span class="ct">width</span>, <span class="ct">min-width</span>, <span class="ct">max-width</span></li>
+					<li><span class="ct">height</span>, <span class="ct">min-height</span>, <span class="ct">max-height</span></li>
+					<li><span class="ct">overflow</span>, <span class="ct">overflow-x</span>, <span class="ct">overflow-y</span></li>
+					<li><span class="ct">align-items</span></li>
+					<li><span class="ct">flex-wrap</span></li>
+					<li><span class="ct">flex-direction</span></li>
+					<li><span class="ct">align-content</span></li>
 				</ul>
 			</div>
 		</div>

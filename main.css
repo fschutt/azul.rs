@@ -112,11 +112,22 @@ body > #center-horizontal-container > #section-2-features > .feature {
     color: black;
     padding: 4em;
     line-height: 1.75;
+    position: relative;
+    margin-bottom: 4em;
+}
+
+body > #center-horizontal-container > #section-2-features > .feature:before {
+    content: "";
+    border-radius: 2em;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     -webkit-box-shadow: 0px 0px 200px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 0px 200px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 200px 0px rgba(0,0,0,0.75);
-    position: relative;
-    margin-bottom: 4em;
 }
 
 body > #center-horizontal-container > #section-2-features > .feature > h3 {
@@ -127,7 +138,7 @@ body > #center-horizontal-container > #section-2-features > .feature > ul {
     padding-left: 2em;
 }
 
-.code-tag {
+.ct {
     background: #efefef;
     border-radius: 5px;
     padding: 0px 5px;
@@ -135,8 +146,18 @@ body > #center-horizontal-container > #section-2-features > .feature > ul {
     font-size: 0.75em;
 }
 
-.code-tag .cl {
+.ct .padded-wide {
+    padding: 5px 15px;
+}
+
+.ct .cl {
     min-height: 0.75em;
+    display: flex;
+    flex-direction: row;
+}
+
+.ct .cl .tab {
+    width: 2em;
 }
 
 @-webkit-keyframes fadeInDown {
