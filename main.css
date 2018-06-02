@@ -257,13 +257,14 @@ body > #center-horizontal-container > #section-2-features > .feature#introductio
 
 .ct {
     background: #efefef;
+    color: black;
     border-radius: 5px;
     padding: 0px 5px;
     font-family: "SourceCodePro", monospace;
     font-size: 0.75em;
 }
 
-.ct .padded-wide {
+.ct.padded-wide {
     padding: 5px 15px;
 }
 
