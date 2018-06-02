@@ -132,10 +132,44 @@ body > #center-horizontal-container > #section-2-features > .feature:before {
 
 body > #center-horizontal-container > #section-2-features > .feature > h3 {
     font-size: 2em;
+    margin-bottom: 1em;
 }
 
 body > #center-horizontal-container > #section-2-features > .feature > ul {
     padding-left: 2em;
+}
+
+body > #center-horizontal-container > #section-2-features > .feature#introduction {
+    margin-bottom: 400px;
+}
+
+body > #center-horizontal-container > #section-2-features > .feature#introduction > .standout > * {
+    position: absolute;
+    -webkit-box-shadow: 0px 0px 100px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 100px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 100px 0px rgba(0,0,0,0.75);
+}
+
+body > #center-horizontal-container > #section-2-features > .feature#introduction > .standout > #calculator {
+    border-radius: 15px;
+    right: -50px;
+    bottom: -50px;
+}
+
+body > #center-horizontal-container > #section-2-features > .feature#introduction > .standout > #screenshot {
+    right: 75px;
+    bottom: -350px;
+    width: 50%;
+    height: auto;
+}
+
+body > #center-horizontal-container > #section-2-features > .feature#introduction > .standout > #linux_screenshot {
+    border-radius: 3px;
+    right: -100px;
+    bottom: -600px;
+    width: 60%;
+    z-index: 1;
+    height: auto;
 }
 
 .ct {
