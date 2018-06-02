@@ -44,14 +44,58 @@ body > #center-horizontal-container {
     display: flex;
     flex-direction: column;
     max-width: 1000px;
-    padding-top: 8em;
-    padding-bottom: 4em;
+}
+
+body > #center-horizontal-container > header {
+    min-height: 64px;
+    margin-bottom: 8em;
+}
+
+body > #center-horizontal-container > header > nav > ul {
+    list-style-type: none;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+body > #center-horizontal-container > header > nav > ul > li {
+    padding: 0px;
+    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.2em;
+    margin-left: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    position: relative;
+}
+
+body > #center-horizontal-container > header > nav > ul > li > a {
+    text-decoration: none;
+    color: white;
+}
+
+body > #center-horizontal-container > header > nav > ul > li:hover:after, body > #center-horizontal-container > header > nav > ul > li.active:after {
+    content: "";
+    background: transparent;
+    width: 100%;
+    position: absolute;
+    border-bottom: 2px dashed rgba(230, 230, 230, 10);
+    bottom: -5px;
+    right: 0;
+}
+
+body > #center-horizontal-container > header > nav > ul > li:hover {
+    cursor: pointer;
 }
 
 body > #center-horizontal-container > #section-1-splash {
     display: flex;
     flex-direction: column;
-    padding: 3em 5em;
+    padding: 0em 5em;
+    margin-bottom: 5em;
 }
 
 .fade-in-down-on-load {
@@ -74,6 +118,15 @@ body > #center-horizontal-container > #section-1-splash {
     animation-name: fadeInUp;
 }
 
+.fade-in-on-load {
+    animation-timing-function: ease-out;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+}
 .after-short-delay {
     -webkit-animation-delay: 0.3s;
     -moz-animation-delay: 0.3s;
@@ -84,6 +137,36 @@ body > #center-horizontal-container > #section-1-splash {
     -webkit-animation-delay: 0.5s;
     -moz-animation-delay: 0.5s;
     animation-delay: 0.5s;
+}
+
+.after-long-delay-1 {
+    -webkit-animation-delay: 0.4s;
+    -moz-animation-delay: 0.4s;
+    animation-delay: 0.4s;
+}
+
+.after-long-delay-2 {
+    -webkit-animation-delay: 0.45s;
+    -moz-animation-delay: 0.45s;
+    animation-delay: 0.45s;
+}
+
+.after-long-delay-3 {
+    -webkit-animation-delay: 0.5s;
+    -moz-animation-delay: 0.5s;
+    animation-delay: 0.5s;
+}
+
+.after-long-delay-4 {
+    -webkit-animation-delay: 0.55s;
+    -moz-animation-delay: 0.55s;
+    animation-delay: 0.55s;
+}
+
+.after-long-delay-5 {
+    -webkit-animation-delay: 0.6s;
+    -moz-animation-delay: 0.6s;
+    animation-delay: 0.6s;
 }
 
 body > #center-horizontal-container > #section-1-splash > #logo {
@@ -192,6 +275,25 @@ body > #center-horizontal-container > #section-2-features > .feature#introductio
 
 .ct .cl .tab {
     width: 2em;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @-webkit-keyframes fadeInDown {
