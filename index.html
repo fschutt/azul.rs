@@ -12,6 +12,7 @@
 
 	<link rel="stylesheet" type="text/css" href="./main.css" />
 	<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico">
+	<script type="text/javascript" src="./prism_code_highlighter.js"></script>
 </head>
 <body>
 	<div id="center-horizontal-container">
@@ -117,77 +118,167 @@
 
 			<div class="feature" id="hello-world">
 				<h3>Hello world</h3>
-				<div class="ct padded-wide">
-					<div class="cl">extern crate azul;</div>
-					<div class="cl"></div>
-					<div class="cl">use azul::prelude::*;</div>
-					<div class="cl">use azul::widgets::*;</div>
-					<div class="cl"></div>
-					<div class="cl">struct MyDataModel {</div>
-					<div class="cl"><div class="tab"></div>/* your data model here */</div>
-					<div class="cl"><div class="tab"></div>counter: usize,</div>
-					<div class="cl">}</div>
-					<div class="cl"></div>
-					<div class="cl">impl Layout for MyDataModel {</div>
-					<div class="cl"></div>
-					<div class="cl"><div class="tab"></div>// note that the data model is immutable here</div>
-					<div class="cl"><div class="tab"></div>fn layout(&self, _window_id: WindowId) -> Dom&lt;Self&gt; {</div>
-					<div class="cl"></div>
-					<div class="cl"><div class="tab"></div><div class="tab"></div>let button = Dom::new(NodeType::Widget(</div>
-					<div class="cl"><div class="tab"></div><div class="tab"></div><div class="tab"></div>button(ButtonContent::Text("Update counter"))</div>
-					<div class="cl"><div class="tab"></div><div class="tab"></div><div class="tab"></div><div class="tab"></div>.with_id("my_awesome_button")</div>
-					<div class="cl"><div class="tab"></div><div class="tab"></div><div class="tab"></div><div class="tab"></div>.with_callback(On::MouseUp, update_counter)</div>
-					<div class="cl"><div class="tab"></div><div class="tab"></div>));</div>
-					<div class="cl"></div>
-					<div class="cl"><div class="tab"></div><div class="tab"></div>let label = Dom::new(NodeType::Label(format!("{}", self.counter)))</div>
-					<div class="cl"><div class="tab"></div><div class="tab"></div><div class="tab"></div><div class="tab"></div>.with_id("the_counter")</div>
-					<div class="cl"><div class="tab"></div><div class="tab"></div>));</div>
-					<div class="cl"></div>
-					<div class="cl"><div class="tab"></div><div class="tab"></div>Dom::new(NodeType::Div)</div>
-					<div class="cl"><div class="tab"></div><div class="tab"></div><div class="tab"></div>.with_child(button)</div>
-					<div class="cl"><div class="tab"></div><div class="tab"></div><div class="tab"></div>.with_child(label)</div>
-					<div class="cl"><div class="tab"></div>}</div>
-					<div class="cl">}</div>
-					<div class="cl"></div>
-					<div class="cl">// Callback that is called when the button was clicked</div>
-					<div class="cl">fn update_counter(app_state: &mut AppState&lt;MyDataModel&gt;, _event: WindowEvent) -> UpdateScreen {</div>
-					<div class="cl"><div class="tab"></div>app_state.data.modify(|data| data.counter += 1;);</div>
-					<div class="cl"><div class="tab"></div>UpdateScreen::Redraw</div>
-					<div class="cl">}</div>
-					<div class="cl"></div>
-					<div class="cl">fn main() {</div>
-					<div class="cl"></div>
-					<div class="cl"><div class="tab"></div>let css = Css::new_from_string("body { flex-direction: column; }").unwrap();</div>
-					<div class="cl"><div class="tab"></div>let mut app = App::new(MyDataModel { counter: 0 });</div>
-					<div class="cl"></div>
-					<div class="cl"><div class="tab"></div>app.create_window(WindowCreateOptions::default(), css).unwrap();</div>
-					<div class="cl"><div class="tab"></div>app.run();</div>
-					<div class="cl"></div>
-					<div class="cl">}</div>
-				</div>
+<pre>
+<code class="language-rust">
+extern crate azul;
+
+use azul::prelude::*;
+use azul::widgets::*;
+
+struct MyDataModel {
+    counter: usize,
+}
+
+impl Layout for MyDataModel {
+    fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
+        let label = Label::new(format!("{}", self.counter)).dom();
+        let button = Button::with_label("Update counter").dom()
+            .with_callback(On::MouseUp, Callback(update_counter));
+
+        Dom::new(NodeType::Div)
+            .with_child(label)
+            .with_child(button)
+    }
+}
+
+fn update_counter(app_state: &mut AppState&lt;MyDataModel&gt;, event: WindowEvent) -> UpdateScreen {
+    app_state.data.modify(|data| data.counter += 1);
+    UpdateScreen::Redraw
+}
+
+fn main() {
+    let mut app = App::new(MyDataModel { counter: 0 });
+    app.create_window(WindowCreateOptions::default(), Css::native()).unwrap();
+    app.run();
+}</code>
+</pre>
 			</div>
 
-			<div class="feature" id="supported-css">
-				<h3>Supported CSS items</h3>
-				<ul>
-					<li><span class="ct">border-radius</span></li>
-					<li><span class="ct">background-color</span></li>
-					<li><span class="ct">border</span></li>
-					<li><span class="ct">background</span></li>
-					<li><span class="ct">font-size</span></li>
-					<li><span class="ct">font-family</span></li>
-					<li><span class="ct">box-shadow</span></li>
-					<li><span class="ct">line-height</span></li>
-					<li><span class="ct">width</span>, <span class="ct">min-width</span>, <span class="ct">max-width</span></li>
-					<li><span class="ct">height</span>, <span class="ct">min-height</span>, <span class="ct">max-height</span></li>
-					<li><span class="ct">overflow</span>, <span class="ct">overflow-x</span>, <span class="ct">overflow-y</span></li>
-					<li><span class="ct">align-items</span></li>
-					<li><span class="ct">flex-wrap</span></li>
-					<li><span class="ct">flex-direction</span></li>
-					<li><span class="ct">align-content</span></li>
-				</ul>
+			<div class="feature">
+				<h3>The worlds first pure functional GUI framework</h3>
+				<p>
+				   Easily compose custom widgets together by appending their DOMs.
+				   No macros, meta-compiler, or scripting language required.
+				   Store your own widgets in external crates and re-use them
+				   throughout your projects.
+				</p>
+<pre>
+<code class="language-rust">
+struct EmailInfo {
+	from: String,
+	subject: String,
+	profile_pic: Option&gt;ImageId&lt;,
+	message: LargeTextId,
+}
+
+fn layout_email_component(email: &EmailInfo) -> Dom&lt;MyDataModel&gt; {
+	Dom::new(NodeType::Div)
+		.with_child(Dom::new(NodeType::Div)
+		.with_class("email-header")
+			.with_child(Dom::new(NodeType::Image(email.profile_pic)))
+			.with_child(Dom::new(NodeType::Label(email.from))))
+		.with_child(Dom::new(NodeType::Div)
+		.with_class("email-content")
+			.with_child(Dom::new(NodeType::Label(email.subject)))
+			.with_child(Dom::new(NodeType::Text(email.message))))
+}
+
+impl Layout for MyDataModel {
+    fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
+    	let mut dom = Dom::new(NodeType::Div).with_id("email-container");
+    	for email in self.emails {
+    		dom.add_child(layout_email_component(email));
+    	}
+    	dom
+	}
+}
+</code>
+</pre>
 			</div>
+
+			<div class="feature">
+				<h3>Stylable with CSS</h3>
+				<p>Choose whether you want a platform-native look or a custom, flashy style!</p>
+				<p>{{ TODO: Screenshots go here }}</p>
+			</div>
+
+			<div class="feature">
+				<h3>Simple Task-based asynchronous IO</h3>
+				<p>Azul provides simple helpers for asynchronous I/O, which are thread-based. Each
+				   task is a single thread, polled for completion by azul.
+				</p>
+<pre>
+<code class="language-rust">
+impl Layout for MyDataModel {
+    fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
+
+    	let button = Button::labeled("Connect to database...").dom()
+    								.with_callback(On::MouseUp, start_connection);
+
+    	let status = Label::new(match self.connection_status {
+    		Connected    => { format!("You are connected!") },
+    		Error(e) 	 => { format!("There was an error: {}", e) },
+    		InProgress 	 => { format!("Loading...") },
+    	}).dom();
+
+    	Dom::new(NodeType::Div)
+    		.add_child(status)
+    		.add_child(button)
+	}
+}
+
+fn start_connection(app_state: &mut AppState&lt;MyDataModel&gt;, event: WindowEvent) -> UpdateScreen {
+    app_state.data.modify(|data| data.connection_status = ConnecionStatus::InProgress);
+    app_state.add_task(connect_to_db_async);
+    UpdateScreen::Redraw
+}
+
+fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;T&gt;&gt;, _: Arc&lt;()&gt;) -> UpdateScreen {
+	thread::sleep(Duration::from_secs(2)); // simulate slow load
+	app_data.modify(|data| data.connection_status = ConnecionStatus::Connected);
+	UpdateScreen::Redraw
+}</code>
+</pre>
+			</div>
+
+						<div class="feature">
+							<h3>Dynamic, stateless CSS</h3>
+							<p></p>
+			<pre>
+			<code class="language-rust">
+let css = Css::new_from_string("
+	#app_drawer--opened {
+		height: [[ app_drawer_height | 200px ]];
+	}
+");
+
+fn on_pane_handle_drag(app_state: &mut AppState&lt;MyDataModel&gt;, event: WindowEvent) {
+	self.data.modify(|data|
+		data.ui.drawer_height =
+			app_state.windows[event.window_id].window_state.size.height -
+			event.cursor_in_viewport.y
+	);
+}
+
+fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
+	if self.ui.lower_pane_is_opened {
+		app_state.window[info.window_id].css.set_dynamic_property(
+			"app_drawer_height", ("height", format!("{}px", self.ui.drawer_height))
+		);
+	}
+
+	// otherwise, the pane will be 200px high by default
+	// the dynamic property is only active for one frame
+}
+</code>
+</pre>
+</div>
+
+		<div class="feature">
+			<h3>And much more!</h3>
+			<p>Check out the <a href="./guide.html">user guide</a> or the <a href="https://docs.rs/azul">API documentation</a></p>
 		</div>
+</div>
 
 		<footer class="fade-in-up-on-load after-longer-delay">
 			© 2017 Maps4Print Einzelunternehmung
