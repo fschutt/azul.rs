@@ -91,13 +91,14 @@ body > #center-horizontal-container > header > nav > ul > li:first-child {
     body > #center-horizontal-container > header > nav > ul > li {
         font-size: 1.0em;
     }
-    body > #center-horizontal-container > header > nav > ul {
-        justify-content: center;
-    }
-}
-@media screen and (min-width:720px) {
     body > #center-horizontal-container > header {
         margin-bottom: 2em;
+    }
+}
+
+@media screen and (max-width:420px) {
+    body > #center-horizontal-container > header > nav > ul {
+        justify-content: center;
     }
 }
 
@@ -213,7 +214,7 @@ body > #center-horizontal-container > #section-1-splash > #logo {
 
 @media screen and (max-width:720px) {
     body > #center-horizontal-container > #section-1-splash > #logo {
-        max-width: 300px;
+        max-width: 200px;
         padding: 0px;
     }
 }
@@ -230,6 +231,11 @@ body > #center-horizontal-container > #section-1-splash > #credits > p:first-chi
 
 body > #center-horizontal-container > #section-1-splash > #subtitle {
     margin-top: 3em;
+    max-width: 800px;
+}
+
+body > #center-horizontal-container > #section-1-splash > #subtitle > h2 {
+    font-size: 1.2em;
 }
 
 body > #center-horizontal-container > #section-2-features > .feature {
@@ -253,6 +259,9 @@ body > #center-horizontal-container > #section-2-features > .feature:last-child 
     }
     body > #center-horizontal-container > #section-2-features > .feature {
         padding: 2em;
+    }
+    body > #center-horizontal-container > header {
+        padding-right: 2em;
     }
 }
 
