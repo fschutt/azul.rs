@@ -23,7 +23,7 @@
 					<li class="active fade-in-on-load after-long-delay-1"><a href="./index.html">overview</a></li>
 					<li class="fade-in-on-load after-long-delay-2"><a href="https://docs.rs/azul">api</a></li>
 					<li class="fade-in-on-load after-long-delay-3"><a href="https://github.com/maps4print/azul/wiki">guide</a></li>
-					<li class="fade-in-on-load after-long-delay-4"><a href="https://gitter.im/azul-rs/general">chat</a></li>
+					<li class="fade-in-on-load after-long-delay-4"><a href="https://discord.gg/nxUmsCG">chat</a></li>
 					<li class="fade-in-on-load after-long-delay-5"><a href="https://github.com/maps4print/azul">code</a></li>
 				</ul>
 			</nav>
@@ -184,12 +184,9 @@ fn layout_email_component(email: &EmailInfo) -> Dom&lt;MyDataModel&gt; {
 }
 
 impl Layout for MyDataModel {
-    fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
-    	let mut dom = Dom::new(NodeType::Div).with_id("email-container");
-    	for email in self.emails {
-    		dom.add_child(layout_email_component(email));
-    	}
-    	dom
+	fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
+    		Dom::new(NodeType::Div).with_id("email-container")
+			.with_child(self.emails.iter().map(layout_email_component).collect())
 	}
 }
 </code>
@@ -211,9 +208,8 @@ impl Layout for MyDataModel {
 <code class="language-rust">
 impl Layout for MyDataModel {
     fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
-
     	let button = Button::labeled("Connect to database...").dom()
-    								.with_callback(On::MouseUp, start_connection);
+    		.with_callback(On::MouseUp, start_connection);
 
     	let status = Label::new(match self.connection_status {
     		Connected    => { format!("You are connected!") },
