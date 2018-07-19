@@ -167,7 +167,7 @@ fn main() {
 struct EmailInfo {
 	from: String,
 	subject: String,
-	profile_pic: Option&gt;ImageId&lt;,
+	profile_pic: Option&lt;ImageId&gt;,
 	message: LargeTextId,
 }
 
@@ -186,7 +186,7 @@ fn layout_email_component(email: &EmailInfo) -> Dom&lt;MyDataModel&gt; {
 impl Layout for MyDataModel {
 	fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
     		Dom::new(NodeType::Div).with_id("email-container")
-			.with_child(self.emails.iter().map(layout_email_component).collect())
+				.with_child(self.emails.iter().map(layout_email_component).collect())
 	}
 }
 </code>
