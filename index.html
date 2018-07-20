@@ -144,7 +144,7 @@ impl Layout for MyDataModel {
 }
 
 fn update_counter(app_state: &mut AppState&lt;MyDataModel&gt;, event: WindowEvent) -> UpdateScreen {
-    app_state.data.modify(|data| data.counter += 1);
+    app_state.data.modify(|state| state.counter += 1);
     UpdateScreen::Redraw
 }
 
@@ -219,7 +219,7 @@ impl Layout for MyDataModel {
 
     	let status = Label::new(match self.connection_status {
     		Connected    => format!("You are connected!"),
-    		Err(e) 	   => format!("There was an error: {}", e),
+    		Err(e) 	     => format!("There was an error: {}", e),
     		InProgress 	 => format!("Loading..."),
     	}).dom();
 
@@ -230,14 +230,14 @@ impl Layout for MyDataModel {
 }
 
 fn start_connection(app_state: &mut AppState&lt;MyDataModel&gt;, event: WindowEvent) -> UpdateScreen {
-    app_state.data.modify(|lock| lock.connection_status = ConnecionStatus::InProgress);
+    app_state.data.modify(|state| state.connection_status = ConnecionStatus::InProgress);
     app_state.add_task(connect_to_db_async);
     UpdateScreen::Redraw
 }
 
 fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;T&gt;&gt;, _: Arc&lt;()&gt;) -> UpdateScreen {
 	thread::sleep(Duration::from_secs(2)); // simulate slow load
-	app_data.modify(|lock| lock.connection_status = ConnecionStatus::Connected);
+	app_data.modify(|state| state.connection_status = ConnecionStatus::Connected);
 	UpdateScreen::Redraw
 }</code>
 </pre>
@@ -260,8 +260,8 @@ let css = Css::new_from_string("
 ");
 
 fn on_pane_handle_drag(app_state: &mut AppState&lt;MyDataModel&gt;, event: WindowEvent) {
-	app_state.data.modify(|lock|
-		lock.ui.drawer_height =
+	app_state.data.modify(|state|
+		state.ui.drawer_height =
 			app_state.windows[event.window_id].window_state.size.height -
 			event.cursor_in_viewport.y
 	);
