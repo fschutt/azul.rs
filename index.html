@@ -95,19 +95,19 @@
 			<div class="feature" id="introduction">
 				<h3>Features</h3>
 				<ul>
-					<li>Cross-platform GUI toolkit (Windows, Linux, Mac, iOS, Android)</li>
-					<li>Model-View-View-Model (MVVM) programming model</li>
-					<li>CSS 2.1-based CSS engine, support for many common CSS properties</li>
-					<li>SVG / 2D drawing helpers</li>
+					<li>Cross-platform GUI toolkit (Windows, Linux, Mac*, iOS, Android)</li>
+					<li>IMGUI / MVVM-like programming model</li>
+					<li>DOM-based stateless components - Widget drawing done using pure functions</li>
+					<li>CSS-like styling engine, support for many common CSS properties</li>
 					<li>Flexbox-based layout description</li>
-					<li>DOM-based stateless components</li>
-					<li>Stateless dynamic CSS properties</li>
-					<li>Async I/O helpers</li>
-					<li>OpenGL integration</li>
 					<li>Huge library of more than 50 common-use GUI widgets</li>
-					<li>Enables custom widgets via function composition</li>
-					<li>Single deployment binary, minimal binary size, CPU and RAM usage</li>
-					<li>Minimal redraw time (0.5 - 4ms), efficient state caching</li>
+					<li>Custom widgets via function composition, easy dynamic UI composition</li>
+					<li>SVG rendering engine, 2D drawing helpers (lines, circles, rects, etc.)</li>
+					<li>OpenGL integration</li>
+					<li>Async I/O helpers</li>
+					<li>Optional integrated logging and error reporting helpers</li>
+					<li>Single deployment binary, minimal binary size (roughly 5MB all-incl.), CPU (0 - 4%) and RAM usage (~ 50MB total)</li>
+					<li>Fast redraw time (0.5 - 4ms), efficient state caching included</li>
 				</ul>
 				<div class="standout" id="section1">
 					<img src="./images/calculator.png" id="calculator" alt="Calculator built using the Azul GUI framework on a Mac">
@@ -118,6 +118,9 @@
 
 			<div class="feature" id="hello-world">
 				<h3>Hello world</h3>
+				<p>
+					A unique feature of Azul is the clear seperation of application data, layout and business logic:
+				</p>
 <pre>
 <code class="language-rust">
 extern crate azul;
@@ -157,18 +160,29 @@ fn main() {
 			<div class="feature">
 				<h3>The worlds first pure functional GUI framework</h3>
 				<p>
-				   Easily compose custom widgets together by appending their DOMs.
+				   Easily compose custom widgets together by appending their DOM trees together. 
 				   No macros, meta-compiler, or scripting language required.
-				   Store your own widgets in external crates and re-use them
+				   You can store your own widgets in external crates and re-use them
 				   throughout your projects.
 				</p>
 <pre>
 <code class="language-rust">
+struct DataModel { 
+    emails: Vec<EmailInfo>,
+}
+
 struct EmailInfo {
 	from: String,
 	subject: String,
 	profile_pic: Option&lt;ImageId&gt;,
 	message: LargeTextId,
+}
+
+impl Layout for MyDataModel {
+	fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
+    		Dom::new(NodeType::Div).with_id("email-container")
+				.with_child(self.emails.iter().map(layout_email_component).collect())
+	}
 }
 
 fn layout_email_component(email: &EmailInfo) -> Dom&lt;MyDataModel&gt; {
@@ -181,13 +195,6 @@ fn layout_email_component(email: &EmailInfo) -> Dom&lt;MyDataModel&gt; {
 		.with_class("email-content")
 			.with_child(Dom::new(NodeType::Label(email.subject)))
 			.with_child(Dom::new(NodeType::Text(email.message))))
-}
-
-impl Layout for MyDataModel {
-	fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
-    		Dom::new(NodeType::Div).with_id("email-container")
-				.with_child(self.emails.iter().map(layout_email_component).collect())
-	}
 }
 </code>
 </pre>
@@ -212,26 +219,26 @@ impl Layout for MyDataModel {
     		.with_callback(On::MouseUp, start_connection);
 
     	let status = Label::new(match self.connection_status {
-    		Connected    => { format!("You are connected!") },
-    		Error(e) 	 => { format!("There was an error: {}", e) },
-    		InProgress 	 => { format!("Loading...") },
+    		Connected    => format!("You are connected!"),
+    		Err(e) 	   => format!("There was an error: {}", e),
+    		InProgress 	 => format!("Loading..."),
     	}).dom();
 
     	Dom::new(NodeType::Div)
-    		.add_child(status)
-    		.add_child(button)
+    		.with_child(status)
+    		.with_child(button)
 	}
 }
 
 fn start_connection(app_state: &mut AppState&lt;MyDataModel&gt;, event: WindowEvent) -> UpdateScreen {
-    app_state.data.modify(|data| data.connection_status = ConnecionStatus::InProgress);
+    app_state.data.modify(|lock| lock.connection_status = ConnecionStatus::InProgress);
     app_state.add_task(connect_to_db_async);
     UpdateScreen::Redraw
 }
 
 fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;T&gt;&gt;, _: Arc&lt;()&gt;) -> UpdateScreen {
 	thread::sleep(Duration::from_secs(2)); // simulate slow load
-	app_data.modify(|data| data.connection_status = ConnecionStatus::Connected);
+	app_data.modify(|lock| lock.connection_status = ConnecionStatus::Connected);
 	UpdateScreen::Redraw
 }</code>
 </pre>
@@ -239,7 +246,12 @@ fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;T&gt;&gt;, _: Arc&lt;()&gt;) ->
 
 						<div class="feature">
 							<h3>Dynamic, stateless CSS</h3>
-							<p></p>
+							<p>
+								Azul provides powerful features for overriding styling properties at runtime and
+								changing styles depending on your application state. Additionally, if you don't 
+								like the default CSS styles you can override them with your own styles, 
+								for custom branding.
+							</p>
 			<pre>
 			<code class="language-rust">
 let css = Css::new_from_string("
@@ -249,8 +261,8 @@ let css = Css::new_from_string("
 ");
 
 fn on_pane_handle_drag(app_state: &mut AppState&lt;MyDataModel&gt;, event: WindowEvent) {
-	self.data.modify(|data|
-		data.ui.drawer_height =
+	app_state.data.modify(|lock|
+		lock.ui.drawer_height =
 			app_state.windows[event.window_id].window_state.size.height -
 			event.cursor_in_viewport.y
 	);
@@ -262,17 +274,16 @@ fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
 			"app_drawer_height", ("height", format!("{}px", self.ui.drawer_height))
 		);
 	}
-
-	// otherwise, the pane will be 200px high by default
-	// the dynamic property is only active for one frame
-}
-</code>
+}</code>
 </pre>
 </div>
 
 		<div class="feature">
-			<h3>And much more!</h3>
-			<p>Check out the <a href="https://github.com/maps4print/azul/wiki">user guide</a> or the <a href="https://docs.rs/azul">API documentation</a></p>
+			<p>Interested? Check out the 
+				<a href="https://github.com/maps4print/azul/wiki">user guide</a> 
+				or the 
+				<a href="https://docs.rs/azul">API documentation</a>
+			</p>
 		</div>
 </div>
 
