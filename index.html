@@ -234,7 +234,7 @@ fn start_connection(app_state: &mut AppState&lt;MyDataModel&gt;, event: WindowEv
     UpdateScreen::Redraw
 }
 
-fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;T&gt;&gt;, _: Arc&lt;()&gt;) -> UpdateScreen {
+fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;MyDataModel&gt;&gt;, _: Arc&lt;()&gt;) -> UpdateScreen {
 	thread::sleep(Duration::from_secs(2)); // simulate slow load
 	app_data.modify(|state| state.connection_status = ConnecionStatus::Connected);
 	UpdateScreen::Redraw
