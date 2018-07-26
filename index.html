@@ -242,40 +242,6 @@ fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;T&gt;&gt;, _: Arc&lt;()&gt;) ->
 </pre>
 			</div>
 
-						<div class="feature">
-							<h3>Dynamic, stateless CSS</h3>
-							<p>
-								Azul provides powerful features for overriding styling properties at runtime and
-								changing styles depending on your application state. Additionally, if you don't 
-								like the default CSS styles you can override them with your own styles, 
-								for custom branding.
-							</p>
-			<pre>
-			<code class="language-rust">
-let css = Css::new_from_string("
-	#app_drawer--opened {
-		height: [[ app_drawer_height | 200px ]];
-	}
-");
-
-fn on_pane_handle_drag(app_state: &mut AppState&lt;MyDataModel&gt;, event: WindowEvent) {
-	app_state.data.modify(|state|
-		state.ui.drawer_height =
-			app_state.windows[event.window_id].window_state.size.height -
-			event.cursor_in_viewport.y
-	);
-}
-
-fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
-	if self.ui.lower_pane_is_opened {
-		app_state.window[info.window_id].css.set_dynamic_property(
-			"app_drawer_height", ("height", format!("{}px", self.ui.drawer_height))
-		);
-	}
-}</code>
-</pre>
-</div>
-
 		<div class="feature">
 			<p>Interested? Check out the 
 				<a href="https://github.com/maps4print/azul/wiki">user guide</a> 
