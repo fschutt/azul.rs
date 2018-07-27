@@ -132,7 +132,7 @@ struct MyDataModel {
 }
 
 impl Layout for MyDataModel {
-    fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
+    fn layout(&self, _info: WindowInfo) -> Dom&lt;Self&gt; {
         let label = Label::new(format!("{}", self.counter)).dom();
         let button = Button::with_label("Update counter").dom()
             .with_callback(On::MouseUp, Callback(update_counter));
@@ -143,7 +143,7 @@ impl Layout for MyDataModel {
     }
 }
 
-fn update_counter(app_state: &mut AppState&lt;MyDataModel&gt;, event: WindowEvent) -> UpdateScreen {
+fn update_counter(app_state: &mut AppState&lt;MyDataModel&gt;, _event: WindowEvent) -> UpdateScreen {
     app_state.data.modify(|state| state.counter += 1);
     UpdateScreen::Redraw
 }
