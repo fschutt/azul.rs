@@ -229,14 +229,14 @@ impl Layout for MyDataModel {
 }
 
 fn start_connection(app_state: &mut AppState&lt;MyDataModel&gt;, event: WindowEvent) -> UpdateScreen {
-    app_state.data.modify(|state| state.connection_status = ConnecionStatus::InProgress);
+    app_state.data.modify(|state| state.connection_status = ConnectionStatus::InProgress);
     app_state.add_task(connect_to_db_async);
     UpdateScreen::Redraw
 }
 
 fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;MyDataModel&gt;&gt;, _: Arc&lt;()&gt;) -> UpdateScreen {
 	thread::sleep(Duration::from_secs(2)); // simulate slow load
-	app_data.modify(|state| state.connection_status = ConnecionStatus::Connected);
+	app_data.modify(|state| state.connection_status = ConnectionStatus::Connected);
 	UpdateScreen::Redraw
 }</code>
 </pre>
