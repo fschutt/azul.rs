@@ -240,6 +240,37 @@ fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;DataModel&gt;&gt;, _: Arc&lt;()
 </pre>
 			</div>
 
+			<div class="feature">
+				<h3>Simple two-way data binding</h3>
+				<p>
+					Contrary to other IMGUI-like toolkits, azul provides automatic two way data binding -
+				   	only minimal code changes to go from a static label to a dynamic input form.
+				</p>
+<pre>
+<code class="language-rust">
+struct DataModel {
+    text_input: TextInputOutcome,
+}
+
+impl Layout for DataModel {
+    fn layout(&self, info: WindowInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
+        // Create a new text input field
+        TextInput::new()
+        // ... bind it to self.text_input - will automatically update
+        .bind(info.window, &self.text_input, &self)
+        // ... and render it in the UI
+        .dom(&self.text_input)
+        .with_callback(On::KeyUp, Callback(print_text_field))
+    }
+}
+
+fn print_text_field(app_state: &mut AppState&lt;DataModel&gt;, _event: WindowEvent) -> UpdateScreen {
+    println!("You've typed: {}", app_state.data.lock().unwrap().text_input.text);
+    UpdateScreen::DontRedraw
+}</code>
+</pre>
+			</div>
+			
 		<div class="feature">
 			<p>Interested? Check out the 
 				<a href="https://github.com/maps4print/azul/wiki">user guide</a> 
