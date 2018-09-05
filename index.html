@@ -124,15 +124,14 @@
 <code class="language-rust">
 extern crate azul;
 
-use azul::prelude::*;
-use azul::widgets::*;
+use azul::{prelude::*, widgets::*};
 
 struct MyDataModel {
     counter: usize,
 }
 
 impl Layout for MyDataModel {
-    fn layout(&self, _info: WindowInfo) -> Dom&lt;Self&gt; {
+    fn layout(&self, _info: WindowInfo&lt;Self&gt) -> Dom&lt;Self&gt; {
         let label = Label::new(format!("{}", self.counter)).dom();
         let button = Button::with_label("Update counter").dom()
             .with_callback(On::MouseUp, Callback(update_counter));
@@ -166,34 +165,34 @@ fn main() {
 				</p>
 <pre>
 <code class="language-rust">
-struct DataModel { 
+struct DataModel {
     emails: Vec&lt;EmailInfo&gt;,
 }
 
 struct EmailInfo {
-	from: String,
-	subject: String,
-	profile_pic: Option&lt;ImageId&gt;,
-	message: LargeTextId,
+    from: String,
+    subject: String,
+    profile_pic: ImageId,
+    message: TextId,
 }
 
-impl Layout for MyDataModel {
-	fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
-    		Dom::new(NodeType::Div).with_id("email-container")
-				.with_child(self.emails.iter().map(layout_email_component).collect())
-	}
+impl Layout for DataModel {
+    fn layout(&self, _info: WindowInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
+            Dom::new(NodeType::Div).with_id("email-container")
+                .with_child(self.emails.iter().map(layout_email_component).collect())
+    }
 }
 
-fn layout_email_component(email: &EmailInfo) -> Dom&lt;MyDataModel&gt; {
-	Dom::new(NodeType::Div)
-		.with_child(Dom::new(NodeType::Div)
-		.with_class("email-header")
-			.with_child(Dom::new(NodeType::Image(email.profile_pic)))
-			.with_child(Dom::new(NodeType::Label(email.from))))
-		.with_child(Dom::new(NodeType::Div)
-		.with_class("email-content")
-			.with_child(Dom::new(NodeType::Label(email.subject)))
-			.with_child(Dom::new(NodeType::Text(email.message))))
+fn layout_email_component(email: &EmailInfo) -> Dom&lt;DataModel&gt; {
+    Dom::new(NodeType::Div)
+        .with_child(Dom::new(NodeType::Div)
+        .with_class("email-header")
+            .with_child(Dom::new(NodeType::Image(email.profile_pic)))
+            .with_child(Dom::new(NodeType::Label(email.from.clone()))))
+        .with_child(Dom::new(NodeType::Div)
+        .with_class("email-content")
+            .with_child(Dom::new(NodeType::Label(email.subject.clone())))
+            .with_child(Dom::new(NodeType::Text(email.message))))
 }</code>
 </pre>
 			</div>
@@ -211,33 +210,32 @@ fn layout_email_component(email: &EmailInfo) -> Dom&lt;MyDataModel&gt; {
 				</p>
 <pre>
 <code class="language-rust">
-impl Layout for MyDataModel {
-    fn layout(&self, info: WindowInfo) -> Dom&lt;Self&gt; {
-    	let button = Button::labeled("Connect to database...").dom()
-    		.with_callback(On::MouseUp, start_connection);
+impl Layout for DataModel {
+    fn layout(&self, _info: WindowInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
+        let button = Button::with_label("Connect to database...").dom()
+            .with_callback(On::MouseUp, Callback(start_connection));
 
-    	let status = Label::new(match self.connection_status {
-    		Connected    => format!("You are connected!"),
-    		Err(e) 	     => format!("There was an error: {}", e),
-    		InProgress 	 => format!("Loading..."),
-    	}).dom();
+        let status = Label::new(match &self.connection_status {
+            Connected    => format!("You are connected!"),
+            Err(e)       => format!("There was an error: {}", e),
+            InProgress   => format!("Loading..."),
+        }).dom();
 
-    	Dom::new(NodeType::Div)
-    		.with_child(status)
-    		.with_child(button)
-	}
+        Dom::new(NodeType::Div)
+            .with_child(status)
+            .with_child(button)
+    }
 }
 
-fn start_connection(app_state: &mut AppState&lt;MyDataModel&gt;, event: WindowEvent) -> UpdateScreen {
+fn start_connection(app_state: &mut AppState&lt;DataModel&gt;, _event: WindowEvent) -> UpdateScreen {
     app_state.data.modify(|state| state.connection_status = ConnectionStatus::InProgress);
-    app_state.add_task(connect_to_db_async);
+    app_state.add_task(connect_to_db_async, &[]);
     UpdateScreen::Redraw
 }
 
-fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;MyDataModel&gt;&gt;, _: Arc&lt;()&gt;) -> UpdateScreen {
-	thread::sleep(Duration::from_secs(2)); // simulate slow load
-	app_data.modify(|state| state.connection_status = ConnectionStatus::Connected);
-	UpdateScreen::Redraw
+fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;DataModel&gt;&gt;, _: Arc&lt;()&gt;) {
+    thread::sleep(Duration::from_secs(2)); // simulate slow load
+    app_data.modify(|state| state.connection_status = ConnectionStatus::Connected);
 }</code>
 </pre>
 			</div>
