@@ -148,9 +148,8 @@ fn update_counter(app_state: &mut AppState&lt;MyDataModel&gt;, _event: WindowEve
 }
 
 fn main() {
-    let mut app = App::new(MyDataModel { counter: 0 }, AppConfig::default());
-    app.create_window(WindowCreateOptions::default(), Css::native()).unwrap();
-    app.run().unwrap();
+    let app = App::new(MyDataModel { counter: 0 }, AppConfig::default());
+    app.run(Window::new(WindowCreateOptions::default(), Css::native()).unwrap()).unwrap();
 }</code>
 </pre>
 			</div>
