@@ -144,7 +144,7 @@ impl Layout for MyDataModel {
     }
 }
 
-fn update_counter(app_state: &mut AppState&lt;MyDataModel&gt;, _event: WindowEvent) -> UpdateScreen {
+fn update_counter(app_state: &mut AppState&lt;MyDataModel&gt;, _event: WindowEvent&lt;MyDataModel&gt;) -> UpdateScreen {
     app_state.data.modify(|state| state.counter += 1);
     UpdateScreen::Redraw
 }
@@ -228,7 +228,7 @@ impl Layout for DataModel {
     }
 }
 
-fn start_connection(app_state: &mut AppState&lt;DataModel&gt;, _event: WindowEvent) -> UpdateScreen {
+fn start_connection(app_state: &mut AppState&lt;DataModel&gt;, _event: WindowEvent&lt;DataModel&gt;) -> UpdateScreen {
     app_state.data.modify(|state| state.connection_status = ConnectionStatus::InProgress);
     app_state.add_task(connect_to_db_async, &[]);
     UpdateScreen::Redraw
@@ -265,7 +265,7 @@ impl Layout for DataModel {
     }
 }
 
-fn print_text_field(app_state: &mut AppState&lt;DataModel&gt;, _event: WindowEvent) -> UpdateScreen {
+fn print_text_field(app_state: &mut AppState&lt;DataModel&gt;, _event: WindowEvent&lt;DataModel&gt;) -> UpdateScreen {
     println!("You've typed: {}", app_state.data.lock().unwrap().text_input_state.text);
     UpdateScreen::DontRedraw
 }</code>
