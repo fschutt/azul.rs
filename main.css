@@ -394,7 +394,7 @@ body > #center-horizontal-container > #section-2-features > .feature#introductio
 
 @media screen and (min-width:720px) {
     body > #center-horizontal-container > #section-2-features > .feature#introduction > .standout > #calculator {
-        border-radius: 15px;
+        /* border-radius: 15px; */
         right: -50px;
         bottom: -50px;
     }
