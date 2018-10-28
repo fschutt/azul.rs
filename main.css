@@ -397,6 +397,7 @@ body > #center-horizontal-container > #section-2-features > .feature#introductio
         /* border-radius: 15px; */
         right: -50px;
         bottom: -50px;
+        width: 32%;
     }
 
     body > #center-horizontal-container > #section-2-features > .feature#introduction > .standout > #screenshot {
