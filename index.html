@@ -20,19 +20,19 @@
 		<header>
 			<nav>
 				<ul>
-					<li class="active fade-in-on-load after-long-delay-1"><a href="./index.html">overview</a></li>
+					<li class="active"><a href="./index.html">overview</a></li>
 					<!--
-					<li class="fade-in-on-load after-long-delay-2"><a href="https://docs.rs/azul">api</a></li>
+					<li><a href="https://docs.rs/azul">api</a></li>
 					-->
-					<li class="fade-in-on-load after-long-delay-2"><a href="https://github.com/maps4print/azul/wiki">guide</a></li>
-					<li class="fade-in-on-load after-long-delay-3"><a href="https://discord.gg/nxUmsCG">chat</a></li>
-					<li class="fade-in-on-load after-long-delay-4"><a href="https://github.com/maps4print/azul">code</a></li>
+					<li><a href="https://github.com/maps4print/azul/wiki">guide</a></li>
+					<li><a href="https://discord.gg/nxUmsCG">chat</a></li>
+					<li><a href="https://github.com/maps4print/azul">code</a></li>
 				</ul>
 			</nav>
 		</header>
 
 		<div id="section-1-splash">
-			<div id="logo" class="fade-in-down-on-load">
+			<div id="logo">
 				<!-- Only for crawlers / screen readers -->
 				<h1 style="display:none">Azul</h1>
 
@@ -50,10 +50,10 @@
 
 			</div>
 
-			<div id="credits" class="fade-in-down-on-load">
+<!--
+			<div id="credits">
 				<p>by</p>
 				<p style="display:none">Maps4Print</h1>
-				<!-- Maps4Print logo -->
 				<a href="http://maps4print.com">
 					<div id="m4p-logo">
 						<svg width="106.62" height="22.884" version="1.1" viewBox="0 0 28.209 6.0548" xmlns="http://www.w3.org/2000/svg">
@@ -84,8 +84,9 @@
 					</div>
 				</a>
 			</div>
+-->
 
-			<div id="subtitle" class="fade-in-up-on-load after-short-delay">
+			<div id="subtitle">
 				<h2>
 					A free, functional, IMGUI-oriented GUI framework for rapid prototyping of
 					desktop applications written in Rust, supported by the Mozilla WebRender rendering engine.
@@ -93,7 +94,7 @@
 			</div>
 		</div>
 
-		<div id="section-2-features" class="fade-in-up-on-load after-longer-delay">
+		<div id="section-2-features">
 			<div class="feature" id="introduction">
 				<h3>Features</h3>
 				<ul>
@@ -159,7 +160,7 @@ fn main() {
 			<div class="feature">
 				<h3>A functional GUI framework for Rust applications</h3>
 				<p>
-				   Easily compose custom widgets together by appending their DOM trees together. 
+				   Easily compose custom widgets together by appending their DOM trees together.
 				   No macros, meta-compiler or external scripting language required.
 				   You can store your own widgets in external crates and re-use them
 				   throughout your projects.
@@ -271,17 +272,17 @@ fn print_text_field(app_state: &mut AppState&lt;DataModel&gt;, _event: WindowEve
 }</code>
 </pre>
 			</div>
-			
+
 		<div class="feature">
-			<p>Interested? Check out our 
+			<p>Interested? Check out our
 				<a href="https://github.com/maps4print/azul/wiki">user guide</a>!
-				<!--or the 
+				<!--or the
 				<a href="https://docs.rs/azul">API documentation</a>-->
 			</p>
 		</div>
 </div>
 
-		<footer class="fade-in-up-on-load after-longer-delay">
+		<footer>
 			© 2017 Maps4Print Einzelunternehmung
 		</footer>
 	</div>
