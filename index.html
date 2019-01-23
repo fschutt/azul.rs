@@ -144,7 +144,7 @@ impl Layout for MyDataModel {
 }
 
 fn update_counter(app_state: &mut AppState&lt;MyDataModel&gt;, _event: WindowEvent&lt;MyDataModel&gt;) -> UpdateScreen {
-    app_state.data.modify(|state| state.counter += 1);
+    app_state.data.modify(|state| state.counter += 1)?;
     Redraw
 }
 
@@ -228,14 +228,14 @@ impl Layout for DataModel {
 }
 
 fn start_connection(app_state: &mut AppState&lt;DataModel&gt;, _event: WindowEvent&lt;DataModel&gt;) -> UpdateScreen {
-    app_state.data.modify(|state| state.connection_status = ConnectionStatus::InProgress);
+    app_state.data.modify(|state| state.connection_status = ConnectionStatus::InProgress)?;
     app_state.add_task(connect_to_db_async, &[]);
     Redraw
 }
 
 fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;DataModel&gt;&gt;, _: Arc&lt;()&gt;) {
     thread::sleep(Duration::from_secs(2)); // simulate slow load
-    app_data.modify(|state| state.connection_status = ConnectionStatus::Connected);
+    app_data.modify(|state| state.connection_status = ConnectionStatus::Connected).unwrap();
 }</code>
 </pre>
 			</div>
