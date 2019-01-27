@@ -132,7 +132,7 @@ struct MyDataModel {
 }
 
 impl Layout for MyDataModel {
-    fn layout(&self, _info: WindowInfo&lt;Self&gt) -> Dom&lt;Self&gt; {
+    fn layout(&self, _info: LayoutInfo&lt;Self&gt) -> Dom&lt;Self&gt; {
         let label = Label::new(format!("{}", self.counter)).dom();
         let button = Button::with_label("Update counter").dom()
             .with_callback(On::MouseUp, Callback(update_counter));
@@ -143,7 +143,7 @@ impl Layout for MyDataModel {
     }
 }
 
-fn update_counter(app_state: &mut AppState&lt;MyDataModel&gt;, _event: WindowEvent&lt;MyDataModel&gt;) -> UpdateScreen {
+fn update_counter(app_state: &mut AppState&lt;MyDataModel&gt;, _event: CallbackInfo&lt;MyDataModel&gt;) -> UpdateScreen {
     app_state.data.modify(|state| state.counter += 1)?;
     Redraw
 }
@@ -177,7 +177,7 @@ struct EmailInfo {
 }
 
 impl Layout for DataModel {
-    fn layout(&self, _info: WindowInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
+    fn layout(&self, _info: LayoutInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
             Dom::new(NodeType::Div).with_id("email-container")
                 .with_child(self.emails.iter().map(layout_email_component).collect())
     }
@@ -211,7 +211,7 @@ fn layout_email_component(email: &EmailInfo) -> Dom&lt;DataModel&gt; {
 <pre>
 <code class="language-rust">
 impl Layout for DataModel {
-    fn layout(&self, _info: WindowInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
+    fn layout(&self, _info: LayoutInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
         let button = Button::with_label("Connect to database...").dom()
             .with_callback(On::MouseUp, Callback(start_connection));
 
@@ -227,7 +227,7 @@ impl Layout for DataModel {
     }
 }
 
-fn start_connection(app_state: &mut AppState&lt;DataModel&gt;, _event: WindowEvent&lt;DataModel&gt;) -> UpdateScreen {
+fn start_connection(app_state: &mut AppState&lt;DataModel&gt;, _event: CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
     app_state.data.modify(|state| state.connection_status = ConnectionStatus::InProgress)?;
     app_state.add_task(connect_to_db_async, &[]);
     Redraw
@@ -253,7 +253,7 @@ struct DataModel {
 }
 
 impl Layout for DataModel {
-    fn layout(&self, info: WindowInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
+    fn layout(&self, info: LayoutInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
         // Create a new text input field
         TextInput::new()
         // ... bind it to self.text_input - will automatically update
@@ -264,7 +264,7 @@ impl Layout for DataModel {
     }
 }
 
-fn print_text_field(app_state: &mut AppState&lt;DataModel&gt;, _event: WindowEvent&lt;DataModel&gt;) -> UpdateScreen {
+fn print_text_field(app_state: &mut AppState&lt;DataModel&gt;, _event: CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
     println!("You've typed: {}", app_state.data.ok()?.text_input_state.text);
     DontRedraw
 }</code>
