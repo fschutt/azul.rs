@@ -127,11 +127,11 @@ extern crate azul;
 
 use azul::{prelude::*, widgets::{label::Label, button::Button}};
 
-struct MyDataModel {
+struct DataModel {
     counter: usize,
 }
 
-impl Layout for MyDataModel {
+impl Layout for DataModel {
     fn layout(&self, _info: LayoutInfo&lt;Self&gt) -> Dom&lt;Self&gt; {
         let label = Label::new(format!("{}", self.counter)).dom();
         let button = Button::with_label("Update counter").dom()
@@ -143,13 +143,13 @@ impl Layout for MyDataModel {
     }
 }
 
-fn update_counter(app_state: &mut AppState&lt;MyDataModel&gt;, _event: CallbackInfo&lt;MyDataModel&gt;) -> UpdateScreen {
+fn update_counter(app_state: &mut AppState&lt;DataModel&gt;, _event: &mut CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
     app_state.data.modify(|state| state.counter += 1)?;
     Redraw
 }
 
 fn main() {
-    let app = App::new(MyDataModel { counter: 0 }, AppConfig::default());
+    let app = App::new(DataModel { counter: 0 }, AppConfig::default());
     app.run(Window::new(WindowCreateOptions::default(), css::native()).unwrap()).unwrap();
 }</code>
 </pre>
@@ -227,7 +227,7 @@ impl Layout for DataModel {
     }
 }
 
-fn start_connection(app_state: &mut AppState&lt;DataModel&gt;, _event: CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
+fn start_connection(app_state: &mut AppState&lt;DataModel&gt;, _event: &mut CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
     app_state.data.modify(|state| state.connection_status = ConnectionStatus::InProgress)?;
     app_state.add_task(connect_to_db_async, &[]);
     Redraw
@@ -264,7 +264,7 @@ impl Layout for DataModel {
     }
 }
 
-fn print_text_field(app_state: &mut AppState&lt;DataModel&gt;, _event: CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
+fn print_text_field(app_state: &mut AppState&lt;DataModel&gt;, _event: &mut CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
     println!("You've typed: {}", app_state.data.ok()?.text_input_state.text);
     DontRedraw
 }</code>
