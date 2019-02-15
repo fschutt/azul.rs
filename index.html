@@ -137,9 +137,9 @@ impl Layout for DataModel {
         let button = Button::with_label("Update counter").dom()
             .with_callback(On::MouseUp, Callback(update_counter));
 
-        Dom::new(NodeType::Div)
-            .with_child(label)
-            .with_child(button)
+        Dom::div()
+        .with_child(label)
+        .with_child(button)
     }
 }
 
@@ -178,21 +178,22 @@ struct EmailInfo {
 
 impl Layout for DataModel {
     fn layout(&self, _info: LayoutInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
-            Dom::new(NodeType::Div).with_id("email-container")
-                .with_child(self.emails.iter().map(layout_email_component).collect())
+        Dom::div().with_id("email-container")
+        .with_child(self.emails.iter().map(layout_email_component).collect())
     }
 }
 
 fn layout_email_component(email: &EmailInfo) -> Dom&lt;DataModel&gt; {
-    Dom::new(NodeType::Div)
-        .with_child(Dom::new(NodeType::Div)
-        .with_class("email-header")
-            .with_child(Dom::new(NodeType::Image(email.profile_pic)))
-            .with_child(Dom::new(NodeType::Label(email.from.clone()))))
-        .with_child(Dom::new(NodeType::Div)
-        .with_class("email-content")
-            .with_child(Dom::new(NodeType::Label(email.subject.clone())))
-            .with_child(Dom::new(NodeType::Text(email.message))))
+    Dom::div()
+    .with_child(
+        Dom::div().with_class("email-header")
+        .with_child(Dom::image(email.profile_pic))
+        .with_child(Dom::label(email.from.clone())
+     ).with_child(
+         Dom::div().with_class("email-content")
+         .with_child(Dom::label(email.subject.clone())
+     )
+     .with_child(Dom::text(email.message))
 }</code>
 </pre>
 			</div>
@@ -221,7 +222,7 @@ impl Layout for DataModel {
             InProgress   => format!("Loading..."),
         }).dom();
 
-        Dom::new(NodeType::Div)
+        Dom::div()
             .with_child(status)
             .with_child(button)
     }
