@@ -19,11 +19,11 @@ body > #center-horizontal-container > #section-1-splash > #logo,
 body > #center-horizontal-container > #section-1-splash > #credits,
 footer
 {
-    display: -webkit-box;  /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+    display: -webkit-box;
     display: -moz-box;
-    display: -ms-flexbox;  /* TWEENER - IE 10 */
-    display: -webkit-flex; /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
-    display: flex;         /* NEW, Spec - Firefox, Chrome, Opera */
+    display: -ms-flexbox;
+    display: -webkit-flex
+    display: flex;
 }
 
 /* polyfill for flex-direction: row */
@@ -194,7 +194,8 @@ body > #center-horizontal-container > header > nav > ul > li > a {
     color: white;
 }
 
-body > #center-horizontal-container > header > nav > ul > li:hover:after, body > #center-horizontal-container > header > nav > ul > li.active:after {
+body > #center-horizontal-container > header > nav > ul > li:hover:after,
+body > #center-horizontal-container > header > nav > ul > li.active:after {
     content: "";
     background: transparent;
     width: 100%;
@@ -262,6 +263,9 @@ body > #center-horizontal-container > #section-2-features > .feature {
     line-height: 1.75;
     position: relative;
     margin-bottom: 4em;
+}
+body > #center-horizontal-container > #section-2-features > .feature > p {
+    margin-bottom: 20px;
 }
 
 body > #center-horizontal-container > #section-2-features > .feature:last-child {
@@ -360,95 +364,15 @@ footer {
     padding: 2em;
 }
 
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@-webkit-keyframes fadeInDown {
-  from {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -2em, 0);
-    transform: translate3d(0, -2em, 0);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
-}
-
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    -webkit-transform: translate3d(0, -2em, 0);
-    transform: translate3d(0, -2em, 0);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
-}
-
-@-webkit-keyframes fadeInUp {
-  from {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 2em, 0);
-    transform: translate3d(0, 2em, 0);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    -webkit-transform: translate3d(0, 2em, 0);
-    transform: translate3d(0, 2em, 0);
-  }
-
-  to {
-    opacity: 1;
-    -webkit-transform: none;
-    transform: none;
-  }
-}
-
 /* ------------------------- PRISM.CSS, for code highlighting ----------------------- */
 
-/* PrismJS 1.14.0
-https://prismjs.com/download.html#themes=prism&languages=rust */
-/**
- * prism.js default theme for JavaScript, CSS and HTML
- * Based on dabblet (http://dabblet.com)
- * @author Lea Verou
- */
+/* PrismJS 1.14.0 - https://prismjs.com/download.html#themes=prism&languages=rust */
 
-code[class*="language-"],
 pre[class*="language-"] {
     color: black;
-    background: none;
+    background: #f5f2f0;
+    padding: 1em;
+    border-radius: 5px;
     text-shadow: 0 1px white;
     font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
     text-align: left;
@@ -468,43 +392,15 @@ pre[class*="language-"] {
     hyphens: none;
 }
 
-pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
-code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+pre[class*="language-"]::-moz-selection,
+pre[class*="language-"]::selection {
     text-shadow: none;
-    background: #b3d4fc;
-}
-
-pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
-code[class*="language-"]::selection, code[class*="language-"] ::selection {
-    text-shadow: none;
-    background: #b3d4fc;
 }
 
 @media print {
-    code[class*="language-"],
     pre[class*="language-"] {
         text-shadow: none;
     }
-}
-
-/* Code blocks */
-pre[class*="language-"] {
-    padding-left: 1em;
-    padding-bottom: 1em;
-    margin: .5em 0;
-    overflow: auto;
-}
-
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-    background: #f5f2f0;
-}
-
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-    padding: .1em;
-    border-radius: .3em;
-    white-space: normal;
 }
 
 .token.comment,
@@ -571,6 +467,7 @@ pre[class*="language-"] {
 .token.bold {
     font-weight: bold;
 }
+
 .token.italic {
     font-style: italic;
 }
@@ -578,4 +475,3 @@ pre[class*="language-"] {
 .token.entity {
     cursor: help;
 }
-
