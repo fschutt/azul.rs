@@ -263,6 +263,8 @@ body > #center-horizontal-container > #section-2-features > .feature {
     line-height: 1.75;
     position: relative;
     margin-bottom: 4em;
+    display: flex;
+    flex-direction: column;
 }
 body > #center-horizontal-container > #section-2-features > .feature > p {
     margin-bottom: 20px;
@@ -368,7 +370,8 @@ footer {
 
 /* PrismJS 1.14.0 - https://prismjs.com/download.html#themes=prism&languages=rust */
 
-pre[class*="language-"] {
+code[class*="language-"] {
+    display: inline-block;
     color: black;
     background: #f5f2f0;
     padding: 1em;
@@ -390,15 +393,12 @@ pre[class*="language-"] {
     -moz-hyphens: none;
     -ms-hyphens: none;
     hyphens: none;
-}
 
-pre[class*="language-"]::-moz-selection,
-pre[class*="language-"]::selection {
-    text-shadow: none;
+    overflow-x: scroll;
 }
 
 @media print {
-    pre[class*="language-"] {
+    code[class*="language-"] {
         text-shadow: none;
     }
 }

@@ -121,7 +121,7 @@
       <div class="feature" id="hello-world">
         <h3>Hello world</h3>
         <p></p>
-<!--   --><pre class="language-rust">extern crate azul;
+<!--   --><code class="language-rust">extern crate azul;
 <!--     -->
 <!--     -->use azul::{prelude::*, widgets::{label::Label, button::Button}};
 <!--     -->
@@ -149,7 +149,7 @@
 <!--     -->fn main() {
 <!--     -->  let app = App::new(DataModel { counter: 0 }, AppConfig::default());
 <!--     -->  app.run(Window::new(WindowCreateOptions::default(), css::native()).unwrap()).unwrap();
-<!--     -->}</pre>
+<!--     -->}</code>
       </div>
 
       <div class="feature" id="functional-gui">
@@ -160,7 +160,7 @@
            You can store your own widgets in external crates and re-use them
            throughout your projects.
         </p>
-<!--   --><pre class="language-rust">struct DataModel {
+<!--   --><code class="language-rust">struct DataModel {
 <!--     -->  emails: Vec&lt;EmailInfo&gt;,
 <!--     -->}
 <!--     -->
@@ -189,7 +189,7 @@
 <!--     -->     .with_child(Dom::label(email.subject.clone())
 <!--     -->   )
 <!--     -->   .with_child(Dom::text(email.message))
-<!--     -->}</pre>
+<!--     -->}</code>
       </div>
 
       <div class="feature" id="async-tasks">
@@ -198,7 +198,7 @@
           Azul provides simple helpers for asynchronous I/O, which are thread-based. Each
           task is a single thread, polled for completion by azul.
         </p>
-<!--   --><pre class="language-rust">impl Layout for DataModel {
+<!--   --><code class="language-rust">impl Layout for DataModel {
 <!--     -->  fn layout(&self, _info: LayoutInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
 <!--     -->    let button = Button::with_label("Connect to database...").dom()
 <!--     -->      .with_callback(On::MouseUp, Callback(start_connection));
@@ -224,7 +224,7 @@
 <!--     -->fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;DataModel&gt;&gt;, _: Arc&lt;()&gt;) {
 <!--     -->  thread::sleep(Duration::from_secs(2)); // simulate slow load
 <!--     -->  app_data.modify(|state| state.connection_status = ConnectionStatus::Connected).unwrap();
-<!--     -->}</pre>
+<!--     -->}</code>
       </div>
 
       <div class="feature" id="two-way-data-binding">
@@ -233,7 +233,7 @@
           Contrary to other IMGUI-like toolkits, azul provides automatic two way data binding -
           only minimal code changes to go from a static label to a dynamic input form.
         </p>
-<!--   --><pre class="language-rust">struct DataModel {
+<!--   --><code class="language-rust">struct DataModel {
 <!--     -->  text_input_state: TextInputState,
 <!--     -->}
 <!--     -->
@@ -252,7 +252,7 @@
 <!--     -->fn print_text_field(app_state: &mut AppState&lt;DataModel&gt;, _: &mut CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
 <!--     -->  println!("You've typed: {}", app_state.data.ok()?.text_input_state.text);
 <!--     -->  DontRedraw
-<!--     -->}</pre>
+<!--     -->}</code>
       </div>
 
       <div class="feature" id="interested">
