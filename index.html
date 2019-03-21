@@ -97,19 +97,18 @@
         <h3>Features</h3>
         <ul>
           <li>Cross-platform GUI toolkit (Windows, Linux, Mac)</li>
-          <li>IMGUI / MVVM-like programming model</li>
-          <li>DOM-based stateless components - Widget drawing done using pure functions</li>
-          <li>CSS-like styling engine, support for many common CSS properties</li>
-          <li>Flexbox-based layout description</li>
-          <li>Built-in standard controls for common user interface elements</li>
-          <li>Custom widgets via function composition, easy dynamic UI composition</li>
+          <li>Immediate-mode API, widgets are composed via function composition</li>
+          <li>CSS styling engine, flexbox-based layout</li>
+          <li>Built-in controls for common user interface elements</li>
+          <li>Create custom widgets via function composition</li>
           <li>SVG rendering engine, 2D drawing helpers (lines, circles, rects, etc.)</li>
           <li>OpenGL integration</li>
-          <li>Async I/O helpers</li>
-          <li>Optional integrated logging and error reporting helpers</li>
+          <li>Async I/O helper functions</li>
+          <li>XML serialization and hot-reload, built-in XML-to-Rust compiler</li>
           <li>Single deployment binary, minimal binary size (roughly 5MB all-incl.),
             <br/>CPU (0 - 4%) and RAM usage (~ 50MB total)</li>
-          <li>Fast redraw time (0.5 - 4ms), efficient state caching included</li>
+          <li>Hardware-accelerated OpenGL rendering (0.5 - 4ms)</li>
+          <li>React-like DOM diffing for incremental layout and styling changes</li>
         </ul>
         <div class="standout" id="section1">
           <img src="./images/azul_calculator.PNG" id="calculator" alt="Calculator built using the Azul GUI framework">
