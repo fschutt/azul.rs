@@ -129,25 +129,26 @@
 <!--     -->}
 <!--     -->
 <!--     -->impl Layout for DataModel {
-<!--     -->  fn layout(&self, _info: LayoutInfo&lt;Self&gt) -> Dom&lt;Self&gt; {
-<!--     -->    let label = Label::new(format!("{}", self.counter)).dom();
-<!--     -->    let button = Button::with_label("Update counter").dom()
-<!--     -->      .with_callback(On::MouseUp, Callback(update_counter));
+<!--     -->    fn layout(&self, _info: LayoutInfo&lt;Self&gt) -> Dom&lt;Self&gt; {
+<!--     -->        let label = Label::new(format!("{}", self.counter)).dom();
+<!--     -->        let button = Button::with_label("Update counter").dom()
+<!--     -->            .with_callback(On::MouseUp, Callback(update_counter));
 
-<!--     -->    Dom::div()
-<!--     -->    .with_child(label)
-<!--     -->    .with_child(button)
-<!--     -->  }
+<!--     -->        Dom::div()
+<!--     -->            .with_child(label)
+<!--     -->            .with_child(button)
+<!--     -->    }
 <!--     -->}
 <!--     -->
 <!--     -->fn update_counter(app_state: &mut AppState&lt;DataModel&gt;, _: &mut CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
-<!--     -->  app_state.data.modify(|state| state.counter += 1)?;
-<!--     -->  Redraw
+<!--     -->    app_state.data.modify(|state| state.counter += 1)?;
+<!--     -->    Redraw
 <!--     -->}
 <!--     -->
 <!--     -->fn main() {
-<!--     -->  let app = App::new(DataModel { counter: 0 }, AppConfig::default());
-<!--     -->  app.run(Window::new(WindowCreateOptions::default(), css::native()).unwrap()).unwrap();
+<!--     -->    let app = App::new(DataModel { counter: 0 }, AppConfig::default()).unwrap();
+<!--     -->    let window = app.create_window(WindowCreateOptions::default(), css::native()).unwrap();
+<!--     -->    app.run(window).unwrap();
 <!--     -->}</code>
       </div>
 
@@ -160,33 +161,33 @@
            throughout your projects.
         </p>
 <!--   --><code class="language-rust">struct DataModel {
-<!--     -->  emails: Vec&lt;EmailInfo&gt;,
+<!--     -->    emails: Vec&lt;EmailInfo&gt;,
 <!--     -->}
 <!--     -->
 <!--     -->struct EmailInfo {
-<!--     -->  from: String,
-<!--     -->  subject: String,
-<!--     -->  profile_pic: ImageId,
-<!--     -->  message: TextId,
+<!--     -->    from: String,
+<!--     -->    subject: String,
+<!--     -->    profile_pic: ImageId,
+<!--     -->    message: TextId,
 <!--     -->}
 <!--     -->
 <!--     -->impl Layout for DataModel {
-<!--     -->  fn layout(&self, _info: LayoutInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
-<!--     -->    Dom::div().with_id("email-container")
-<!--     -->    .with_child(self.emails.iter().map(layout_email_component).collect())
-<!--     -->  }
+<!--     -->    fn layout(&self, _info: LayoutInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
+<!--     -->        Dom::div().with_id("email-container")
+<!--     -->            .with_child(self.emails.iter().map(layout_email_component).collect())
+<!--     -->    }
 <!--     -->}
 <!--     -->
 <!--     -->fn layout_email_component(email: &EmailInfo) -> Dom&lt;DataModel&gt; {
-<!--     -->  Dom::div()
-<!--     -->  .with_child(
-<!--     -->    Dom::div().with_class("email-header")
-<!--     -->    .with_child(Dom::image(email.profile_pic))
-<!--     -->    .with_child(Dom::label(email.from.clone())
-<!--     -->   ).with_child(
-<!--     -->     Dom::div().with_class("email-content")
-<!--     -->     .with_child(Dom::label(email.subject.clone())
-<!--     -->   )
+<!--     -->    Dom::div()
+<!--     -->    .with_child(
+<!--     -->        Dom::div().with_class("email-header")
+<!--     -->            .with_child(Dom::image(email.profile_pic))
+<!--     -->            .with_child(Dom::label(email.from.clone())
+<!--     -->    ).with_child(
+<!--     -->        Dom::div().with_class("email-content")
+<!--     -->            .with_child(Dom::label(email.subject.clone())
+<!--     -->    )
 <!--     -->   .with_child(Dom::text(email.message))
 <!--     -->}</code>
       </div>
@@ -199,30 +200,30 @@
         </p>
 <!--   --><code class="language-rust">impl Layout for DataModel {
 <!--     -->  fn layout(&self, _info: LayoutInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
-<!--     -->    let button = Button::with_label("Connect to database...").dom()
-<!--     -->      .with_callback(On::MouseUp, Callback(start_connection));
+<!--     -->      let button = Button::with_label("Connect to database...").dom()
+<!--     -->          .with_callback(On::MouseUp, Callback(start_connection));
 <!--     -->
-<!--     -->    let status = Label::new(match &self.connection_status {
-<!--     -->      Connected    => format!("You are connected!"),
-<!--     -->      Err(e)       => format!("There was an error: {}", e),
-<!--     -->      InProgress   => format!("Loading..."),
-<!--     -->    }).dom();
+<!--     -->      let status = Label::new(match &self.connection_status {
+<!--     -->          Connected    => format!("You are connected!"),
+<!--     -->          Err(e)       => format!("There was an error: {}", e),
+<!--     -->          InProgress   => format!("Loading..."),
+<!--     -->      }).dom();
 <!--     -->
-<!--     -->    Dom::div()
-<!--     -->      .with_child(status)
-<!--     -->      .with_child(button)
-<!--     -->  }
+<!--     -->      Dom::div()
+<!--     -->          .with_child(status)
+<!--     -->          .with_child(button)
+<!--     -->    }
 <!--     -->}
 <!--     -->
 <!--     -->fn start_connection(app_state: &mut AppState&lt;DataModel&gt;, _: &mut CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
-<!--     -->  app_state.data.modify(|state| state.connection_status = ConnectionStatus::InProgress)?;
-<!--     -->  app_state.add_task(connect_to_db_async, &[]);
-<!--     -->  Redraw
+<!--     -->    app_state.data.modify(|state| state.connection_status = ConnectionStatus::InProgress)?;
+<!--     -->    app_state.add_task(Task::new(connect_to_db_async));
+<!--     -->    Redraw
 <!--     -->}
 <!--     -->
 <!--     -->fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;DataModel&gt;&gt;, _: Arc&lt;()&gt;) {
-<!--     -->  thread::sleep(Duration::from_secs(2)); // simulate slow load
-<!--     -->  app_data.modify(|state| state.connection_status = ConnectionStatus::Connected).unwrap();
+<!--     -->    thread::sleep(Duration::from_secs(2)); // simulate slow load
+<!--     -->    app_data.modify(|state| state.connection_status = ConnectionStatus::Connected).unwrap();
 <!--     -->}</code>
       </div>
 
@@ -233,24 +234,24 @@
           only minimal code changes to go from a static label to a dynamic input form.
         </p>
 <!--   --><code class="language-rust">struct DataModel {
-<!--     -->  text_input_state: TextInputState,
+<!--     -->    text_input_state: TextInputState,
 <!--     -->}
 <!--     -->
 <!--     -->impl Layout for DataModel {
-<!--     -->  fn layout(&self, info: LayoutInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
-<!--     -->    // Create a new text input field
-<!--     -->    TextInput::new()
-<!--     -->    // ... bind it to self.text_input - will automatically update
-<!--     -->    .bind(info.window, &self.text_input_state, &self)
-<!--     -->    // ... and render it in the UI
-<!--     -->    .dom(&self.text_input_state)
-<!--     -->    .with_callback(On::KeyUp, Callback(print_text_field))
-<!--     -->  }
+<!--     -->    fn layout(&self, info: LayoutInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
+<!--     -->        // Create a new text input field
+<!--     -->        TextInput::new()
+<!--     -->        // ... bind it to self.text_input - will automatically update
+<!--     -->        .bind(info.window, &self.text_input_state, &self)
+<!--     -->        // ... and render it in the UI
+<!--     -->        .dom(&self.text_input_state)
+<!--     -->        .with_callback(On::KeyUp, Callback(print_text_field))
+<!--     -->    }
 <!--     -->}
 <!--     -->
 <!--     -->fn print_text_field(app_state: &mut AppState&lt;DataModel&gt;, _: &mut CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
-<!--     -->  println!("You've typed: {}", app_state.data.ok()?.text_input_state.text);
-<!--     -->  DontRedraw
+<!--     -->    println!("You've typed: {}", app_state.data.ok()?.text_input_state.text);
+<!--     -->    DontRedraw
 <!--     -->}</code>
       </div>
 
