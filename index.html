@@ -146,7 +146,7 @@
 <!--     -->}
 <!--     -->
 <!--     -->fn main() {
-<!--     -->    let app = App::new(DataModel { counter: 0 }, AppConfig::default()).unwrap();
+<!--     -->    let mut app = App::new(DataModel { counter: 0 }, AppConfig::default()).unwrap();
 <!--     -->    let window = app.create_window(WindowCreateOptions::default(), css::native()).unwrap();
 <!--     -->    app.run(window).unwrap();
 <!--     -->}</code>
