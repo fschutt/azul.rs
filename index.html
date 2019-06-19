@@ -140,8 +140,8 @@
 <!--     -->    }
 <!--     -->}
 <!--     -->
-<!--     -->fn update_counter(app_state: &mut AppState&lt;DataModel&gt;, _: &mut CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
-<!--     -->    app_state.data.modify(|state| state.counter += 1)?;
+<!--     -->fn update_counter(event: CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
+<!--     -->    event.state.data.counter += 1;
 <!--     -->    Redraw
 <!--     -->}
 <!--     -->
@@ -201,9 +201,9 @@
 <!--   --><code class="language-rust">impl Layout for DataModel {
 <!--     -->  fn layout(&self, _info: LayoutInfo&lt;Self&gt;) -> Dom&lt;Self&gt; {
 <!--     -->      let button = Button::with_label("Connect to database...").dom()
-<!--     -->          .with_callback(On::MouseUp, Callback(start_connection));
+<!--     -->          .with_callback(On::MouseUp, start_connection);
 <!--     -->
-<!--     -->      let status = Label::new(match &self.connection_status {
+<!--     -->      let status = Label::new(match &self.connection_status.lock().unwrap() {
 <!--     -->          Connected    => format!("You are connected!"),
 <!--     -->          Err(e)       => format!("There was an error: {}", e),
 <!--     -->          InProgress   => format!("Loading..."),
@@ -215,13 +215,13 @@
 <!--     -->    }
 <!--     -->}
 <!--     -->
-<!--     -->fn start_connection(app_state: &mut AppState&lt;DataModel&gt;, _: &mut CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
-<!--     -->    app_state.data.modify(|state| state.connection_status = ConnectionStatus::InProgress)?;
-<!--     -->    app_state.add_task(Task::new(connect_to_db_async));
+<!--     -->fn start_connection(event: CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
+<!--     -->    event.state.data.connection_status.modify(|status| *status = ConnectionStatus::InProgress)?;
+<!--     -->    event.state.add_task(Task::new(connect_to_db_async, event.state.data.connection_status.clone()));
 <!--     -->    Redraw
 <!--     -->}
 <!--     -->
-<!--     -->fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;DataModel&gt;&gt;, _: Arc&lt;()&gt;) {
+<!--     -->fn connect_to_db_async(app_data: Arc&lt;Mutex&lt;ConnectionStatus&gt;&gt;, _: DropCheck) {
 <!--     -->    thread::sleep(Duration::from_secs(2)); // simulate slow load
 <!--     -->    app_data.modify(|state| state.connection_status = ConnectionStatus::Connected).unwrap();
 <!--     -->}</code>
@@ -249,8 +249,8 @@
 <!--     -->    }
 <!--     -->}
 <!--     -->
-<!--     -->fn print_text_field(app_state: &mut AppState&lt;DataModel&gt;, _: &mut CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
-<!--     -->    println!("You've typed: {}", app_state.data.ok()?.text_input_state.text);
+<!--     -->fn print_text_field(event: CallbackInfo&lt;DataModel&gt;) -> UpdateScreen {
+<!--     -->    println!("You've typed: {}", event.state.data.text_input_state.text);
 <!--     -->    DontRedraw
 <!--     -->}</code>
       </div>
