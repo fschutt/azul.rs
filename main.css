@@ -8,108 +8,17 @@
     margin: 0px;
 }
 
-/* polyfill for display: flex; */
-html,
-body,
-body > #center-horizontal-container,
-body > #center-horizontal-container > header > nav > ul,
-body > #center-horizontal-container > header > nav > ul > li,
-body > #center-horizontal-container > #section-1-splash,
-body > #center-horizontal-container > #section-1-splash > #logo,
-body > #center-horizontal-container > #section-1-splash > #credits,
-footer
-{
-    display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex
-    display: flex;
-}
-
-/* polyfill for flex-direction: row */
-body,
-body > #center-horizontal-container > header > nav > ul,
-body > #center-horizontal-container > #section-1-splash > #logo,
-body > #center-horizontal-container > #section-1-splash > #credits {
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -moz-box-orient: horizontal;
-    -moz-box-direction: normal;
-    -ms-flex-direction: row;
-    -webkit-flex-direction: row;
-    flex-direction: row;
-}
-
-/* polyfill for flex-direction: column */
-body > #center-horizontal-container,
-body > #center-horizontal-container > header > nav > ul > li,
-body > #center-horizontal-container > #section-1-splash {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -moz-box-orient: vertical;
-    -moz-box-direction: normal;
-    -ms-flex-direction: column;
-    -webkit-flex-direction: column;
-    flex-direction: column;
-}
-
-/* polyfill for align-items: flex-start */
-body {
-    -webkit-box-align: start;
-    -moz-box-align: start;
-    -ms-flex-align: start;
-    -webkit-align-items: flex-start;
-    align-items: flex-start;
-}
-
-/* polyfill for justify-content: center */
-body,
-body > #center-horizontal-container > header > nav > ul > li {
-    -webkit-box-pack: center;
-    -moz-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-}
-
-/* polyfill for justify-content: flex-end */
-body > #center-horizontal-container > header > nav > ul {
-    -webkit-box-pack: end;
-    -moz-box-pack: end;
-    -ms-flex-pack: end;
-    -webkit-justify-content: flex-end;
-    justify-content: flex-end;
-}
-
-/* polyfill for justify-content: flex-start */
-footer {
-    -webkit-box-pack: start;
-    -moz-box-pack: start;
-    -ms-flex-pack: start;
-    -webkit-justify-content: flex-start;
-    justify-content: flex-start;
-}
-
 html {
-    /*display: flex;*/
     overflow-x: hidden;
     min-height: 100%;
-    width: 100%;
     font-family: sans-serif;
 }
 
 body {
-    /*display: flex;*/
-    /*flex-direction: row;*/
-    /*align-items: flex-start;*/
-    /*justify-content: center;*/
     font-family: "Overpass";
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    width: 100%;
-    min-width: 100%;
-    height: 100%;
 
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#004e92+0,000428+100 */
     background: #004e92; /* Old browsers */
@@ -121,22 +30,9 @@ body {
     color: white;
 }
 
-@media screen and (min-width:720px) {
-    p, li {
-        font-size: 1.2em;
-    }
-}
-
 body > #center-horizontal-container {
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    width: 100%;
-}
-
-@media screen and (min-width:720px) {
-    body > #center-horizontal-container {
-        max-width: 1000px;
-    }
+    margin: 0 auto;
+    max-width: 1000px;
 }
 
 body > #center-horizontal-container > header {
@@ -144,25 +40,27 @@ body > #center-horizontal-container > header {
     margin-bottom: 8em;
 }
 
+@media screen and (min-width:720px) {
+    p, li {
+        font-size: 1.2em;
+    }
+}
+
 body > #center-horizontal-container > header > nav > ul {
     list-style-type: none;
     text-decoration: none;
-    /*display: flex;*/
-    /*flex-direction: row;*/
-    /*justify-content: flex-end;*/
+    text-align: right;
 }
 
 body > #center-horizontal-container > header > nav > ul > li {
     padding: 0px;
     padding-top: 30px;
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*justify-content: center;*/
     font-size: 1.2em;
     margin-left: 20px;
     font-weight: bold;
     border-radius: 10px;
     position: relative;
+    display: inline-block;
 }
 
 body > #center-horizontal-container > header > nav > ul > li:first-child {
@@ -175,17 +73,6 @@ body > #center-horizontal-container > header > nav > ul > li:first-child {
     }
     body > #center-horizontal-container > header {
         margin-bottom: 2em;
-    }
-}
-
-@media screen and (max-width:420px) {
-    body > #center-horizontal-container > header > nav > ul {
-        /*justify-content: center;*/
-        -webkit-box-pack: center;
-        -moz-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
     }
 }
 
@@ -210,8 +97,6 @@ body > #center-horizontal-container > header > nav > ul > li:hover {
 }
 
 body > #center-horizontal-container > #section-1-splash {
-    /*display: flex;*/
-    /*flex-direction: column;*/
     padding: 0em 5em;
     margin-bottom: 5em;
 }
@@ -224,35 +109,46 @@ body > #center-horizontal-container > #section-1-splash {
 }
 
 body > #center-horizontal-container > #section-1-splash > #logo {
-    /*display: flex;*/
-    /*flex-direction: row;*/
     padding: 1em 0px;
+    width: 321.01px;
+    height: 77.387px;
 }
 
 @media screen and (max-width:720px) {
     body > #center-horizontal-container > #section-1-splash > #logo {
-        max-width: 200px;
-        padding: 0px;
+        width: 240.7575px;
+        height: 58.04025px;
+        padding: 0.5em 0px;
     }
 }
 
 body > #center-horizontal-container > #section-1-splash > #credits {
-    /*display: flex;*/
-    /*flex-direction: row;*/
     line-height: 1.2;
 }
 
-body > #center-horizontal-container > #section-1-splash > #credits > p:first-child {
+body > #center-horizontal-container > #section-1-splash > #credits > * {
     margin-right: 0.5em;
+    display: inline-block;
+}
+
+body > #center-horizontal-container > #section-1-splash > #credits > #m4p-logo {
+    position: relative;
+    top: 5px;
 }
 
 body > #center-horizontal-container > #section-1-splash > #subtitle {
-    margin-top: 3em;
+    margin-top: 2em;
     max-width: 800px;
 }
 
 body > #center-horizontal-container > #section-1-splash > #subtitle > h2 {
-    font-size: 1.2em;
+    font-size: 1.4em;
+}
+
+@media screen and (max-width:720px) {
+    body > #center-horizontal-container > #section-1-splash > #subtitle > h2 {
+        font-size: 1.2em;
+    }
 }
 
 body > #center-horizontal-container > #section-2-features > .feature {
@@ -361,8 +257,6 @@ body > #center-horizontal-container > #section-2-features > .feature#introductio
 }
 
 footer {
-    /*display: flex;*/
-    /*justify-content: flex-start;*/
     padding: 2em;
 }
 
