@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Unit testing</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="description" content="Cross-platform MIT-licensed desktop GUI framework for C and Rust using the Mozilla WebRender rendering engine">
+  <meta name="keywords" content="gui, rust, user interface">
+
+  <link rel="preload" as="font" href="fonts/SourceSerifPro-Regular.ttf" type="font/ttf">
+  <link rel="preload" as="font" href="fonts/Morris Jenson Initialen.ttf" type="font/ttf">
+
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+  <link rel="stylesheet" type="text/css" href="../../main.css">
+  <style>
+        main > div { max-width: 80ch; }
+        main > div > p { margin-left: 10px; margin-top: 10px; }
+        main p, main a, main strong { font-family: "Source Serif Pro", serif; font-size: 16px; }
+        main > div > h3 { margin: 10px; }
+        main .warning h4 { margin-bottom: 10px; }
+        main .warning {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px dashed #facb26;
+            margin: 10px;
+            background: #fff8be;
+            color: #222;
+            box-shadow: 0px 0px 20px #facb2655;
+        }
+        main code.expand { display: block; margin-top: 20px; padding: 10px; border-radius: 5px; }
+        </style>
+</head>
+
+<body>
+  <div class="center">
+  <aside>
+    <header>
+      <h1 style="display:none;">Azul GUI Framework</h1>
+      <a href="../../">
+        <img src="../../logo.svg">
+      </a>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="../../index.html">overview</a></li>
+        <li>
+          <a href="../../releases.html">releases</a>
+          
+        </li>
+        <li><a href="https://github.com/maps4print/azul">code</a></li>
+        <li><a href="https://matrix.to/#/#azul:matrix.org">matrix chat</a></li>
+        <li>
+          <a href="../../guide.html">guide</a>
+          <ul><li><a href="./Installation">Installation</a></li><li><a href="./GettingStarted">Getting Started</a></li><li><a href="./Asimplecounter">A simple counter</a></li><li><a href="./RefAnyanddatabinding">RefAny and data binding</a></li><li><a href="./StylingyourapplicationwithCSS">Styling your application with CSS</a></li><li><a href="./SVGdrawing">SVG drawing</a></li><li><a href="./Timers,ThreadsandAnimations">Timers, Threads and Animations</a></li><li><a href="./Interfacingwiththewindowingsystem">Interfacing with the windowing system</a></li><li><a href="./OpenGLdrawing">OpenGL drawing</a></li><li><a href="./Unittesting">Unit testing</a></li><li><a href="./XMLtoRustcompilation">XML to Rust compilation</a></li></ul>
+        </li>
+        <li>
+          <a href="../../api.html">api</a>
+          
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <main>
+    <h1>Unit testing</h1>
+    <div>
+      Unit testing can be done by using the `Dom::assert_eq` function, which
+tests your DOM against a certain XML string:
+
+```rust
+struct DataModel;
+
+fn render_counter(count: usize) -> Dom<DataModel> {
+     Dom::div().with_class("test").with_child(
+          Dom::label(format!("{}", count))
+     )
+}
+
+#[test]
+fn test_counter_ui() {
+    let expected = r#"
+        <div class="test">
+            <p>5</p>
+        </div>
+    "#;
+
+    let dom = render_counter(5);
+
+    dom.assert_eq(expected);
+}
+```
+
+You can technically also use `assert_eq!(expected, got);`, however, if the test fails,
+the `Dom::assert_eq` error message has a much nicer format:
+
+```xml
+thread 'widgets::test_counter_ui' panicked at '
+Expected DOM did not match:
+
+expected: ----------
+<div/>
+    <div class="test"/>
+        <p>4</p>
+    </div>
+</div>
+
+got: ----------
+<div/>
+    <div class="test"/>
+        <p>5</p>
+    </div>
+</div>
+```
+
+## Good Practices
+
+- Typedef the name of your DataModel in your main.rs, so that it it easier to change
+  in future projects.
+- It's also a good idea to typedef the `&'a AppState<DataModel>` and the `&'a mut CallbackInfo`,
+  in order to keep the code cleaner:
+
+```rust
+pub type DataModel = AppData;
+pub type State<'a> = &'a mut AppState<DataModel>;
+pub type CbInfo<'a, 'b> = &'a mut CallbackInfo<'b, DataModel>;
+```
+
+This way you can avoid a bit of typing work since rustc is smart enough to infer
+the lifetimes - your callbacks should now look like this:
+
+```rust
+fn my_callback(state: State, cb: CbInfo) -> Dom<DataModel> { /* */ }
+```
+    </div>
+  </main>
+  </div>
+  <script async type="text/javascript" src="../../prism_code_highlighter.js"></script>
+</body>
+</html>
