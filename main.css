@@ -1,223 +1,278 @@
-body > #center-horizontal-container {
-    margin: 0 auto;
-    max-width: 1100px;
+@media screen {
+  @font-face {
+      font-family: "Source Serif Pro";
+      src: url("./fonts/SourceSerifPro-Regular.ttf");
+  }
+
+  @font-face {
+      font-family: "Morris Jenson Initialen";
+      src: url("./fonts/Morris Jenson Initialen.ttf");
+  }
 }
 
-body > #center-horizontal-container > header {
-    min-height: 64px;
-    margin-bottom: 8em;
+@media print {
+
+  .pbi { page-break-inside: avoid; }
+
+  @page {
+    size: auto;   /* auto is the initial value */
+    margin: 0mm 10mm;  /* this affects the margin in the printer settings */
+  }
+
+  html
+  {
+      background-color: #FFFFFF;
+      margin: 0px;  /* this affects the margin on the html before sending to printer */
+  }
+
+  body
+  {
+      border: none;
+      margin: 0mm; /* margin you want for the content */
+  }
 }
 
-body > #center-horizontal-container > header > nav > ul {
-    list-style-type: none;
-    text-decoration: none;
-    text-align: right;
-}
-
-body > #center-horizontal-container > header > nav > ul > li {
+* {
     padding: 0px;
-    padding-top: 30px;
-    font-size: 1.2em;
-    margin-left: 20px;
-    font-weight: bold;
-    border-radius: 10px;
-    position: relative;
-    display: inline-block;
+    margin: 0px;
+    font-family: "Source Serif Pro", serif;
 }
 
-body > #center-horizontal-container > header > nav > ul > li:first-child {
-    margin-left: 0px;
-}
-
-@media screen and (max-width:720px) {
-    body > #center-horizontal-container > header > nav > ul > li {
-        font-size: 1.0em;
-    }
-    body > #center-horizontal-container > header {
-        margin-bottom: 2em;
-    }
-}
-
-body > #center-horizontal-container > header > nav > ul > li > a {
-    text-decoration: none;
-    color: white;
-}
-
-body > #center-horizontal-container > header > nav > ul > li:hover:after,
-body > #center-horizontal-container > header > nav > ul > li.active:after {
-    content: "";
-    background: transparent;
+html {
+    overflow-x: hidden;
+    min-height: 100%;
     width: 100%;
-    position: absolute;
-    border-bottom: 2px dashed rgba(230, 230, 230, 10);
-    bottom: -5px;
-    right: 0;
 }
 
-body > #center-horizontal-container > header > nav > ul > li:hover {
-    cursor: pointer;
+body {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#004e92+0,000428+100 */
+    background: #004e92; /* Old browsers */
+    background: -moz-linear-gradient(-45deg, #004e92 0%, #000428 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(-45deg, #004e92 0%,#000428 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(135deg, #004e92 0%,#000428 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#004e92', endColorstr='#000428',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    min-height: 100%;
 }
 
-body > #center-horizontal-container > #section-1-splash {
-    padding: 0em 5em;
-    margin-bottom: 5em;
+body .center {
+  margin: 0 auto;
+  max-width: 1400px;
+  min-height: 100%;
+  min-height: 100%;
 }
 
-@media screen and (max-width:720px) {
-    body > #center-horizontal-container > #section-1-splash {
-        padding: 0em 2em;
-        margin-bottom: 2em;
-    }
+aside {
+  max-width: 200px;
+  padding: 50px;
+  float: left;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
 }
 
-body > #center-horizontal-container > #section-1-splash > #logo {
-    padding: 1em 0px;
-    width: 321.01px;
-    height: 77.387px;
+@media screen and (max-width: 720px) {
+  body .center aside { min-width: 100%; }
+  body .center aside header { display: inline-block; }
+  body .center aside nav { display: inline-block; float: right; overflow: hidden; margin: 0px; }
+  body .center aside nav ul li { display: inline-block; width: 50%; }
+  body .center aside nav ul li:nth-child(odd) { float: right; }
+  body .center aside nav ul li ul { display: none; }
 }
 
-@media screen and (max-width:720px) {
-    body > #center-horizontal-container > #section-1-splash > #logo {
-        width: 240.7575px;
-        height: 58.04025px;
-        padding: 0.5em 0px;
-    }
+aside header {
+  width: 100px;
+  height: 100px;
 }
 
-body > #center-horizontal-container > #section-1-splash > #credits {
-    line-height: 1.2;
+aside nav {
+  margin-top: 50px;
 }
 
-body > #center-horizontal-container > #section-1-splash > #credits > * {
-    margin-right: 0.5em;
-    display: inline-block;
+aside nav ul {
+  line-height: 1.5;
+  color: white;
+}
+aside nav ul li a {
+  color: white;
+  text-decoration: none;
+}
+aside nav ul li.active {
+  text-decoration: underline;
+}
+aside nav ul li ul a{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+aside nav ul li ul {
+  width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-left: 10px;
+  font-size: 1rem;
+  font-family: monospace;
+  list-style-type: none;
+}
+main {
+  background: white;
+  overflow:hidden;
+  min-height: 100%;
+  box-shadow: 0px 0px 100px 0px rgba(0, 0, 0, 0.5);
+  padding: 50px;
+  box-sizing: border-box;
+  min-height: 100%;
+  z-index: 1;
 }
 
-body > #center-horizontal-container > #section-1-splash > #credits > #m4p-logo {
-    position: relative;
-    top: 5px;
+@media print {
+  main {
+    box-shadow: none !important;
+  }
 }
 
-body > #center-horizontal-container > #section-1-splash > #subtitle {
-    margin-top: 2em;
-    max-width: 800px;
-}
-
-body > #center-horizontal-container > #section-1-splash > #subtitle > h2 {
-    font-size: 1.4em;
-}
-
-@media screen and (max-width:720px) {
-    body > #center-horizontal-container > #section-1-splash > #subtitle > h2 {
-        font-size: 1.2em;
-    }
-}
-
-body > #center-horizontal-container > #section-2-features > .feature {
-    border-radius: 2em;
-    background: white;
-    color: black;
-    padding: 4em;
-    line-height: 1.75;
-    position: relative;
-    margin-bottom: 4em;
-    display: flex;
-    flex-direction: column;
-}
-body > #center-horizontal-container > #section-2-features > .feature > p {
+main h1 {
     margin-bottom: 20px;
 }
 
-body > #center-horizontal-container > #section-2-features > .feature:last-child {
-    margin-bottom: 0px;
+.flower {
+  font-family: "Morris Jenson Initialen", serif;
+  letter-spacing: -0.1em;
+  font-style: unset;
 }
 
-@media screen and (max-width:1000px) {
-    body > #center-horizontal-container > #section-2-features > .feature,
-    body > #center-horizontal-container > #section-2-features > .feature:before {
-        border-radius: 0px;
-    }
-    body > #center-horizontal-container > #section-2-features > .feature {
-        padding: 2em;
-    }
-    body > #center-horizontal-container > header {
-        padding-right: 2em;
-    }
+.horizontal-flip {
+  display: inline-block;
+  -moz-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  transform: scaleX(-1);
+  -ms-filter: fliph; /*IE*/
+  filter: fliph; /*IE*/
 }
 
-body > #center-horizontal-container > #section-2-features > .feature:before {
-    content: "";
-    border-radius: 2em;
-    z-index: -1;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    -webkit-box-shadow: 0px 0px 200px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 200px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 200px 0px rgba(0,0,0,0.75);
+.vertical-flip {
+  display: inline-block;
+  -moz-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  transform: scaleY(-1);
+  -ms-filter: flipv; /*IE*/
+  filter: flipv; /*IE*/
 }
 
-body > #center-horizontal-container > #section-2-features > .feature > h3 {
-    font-size: 2em;
-    margin-bottom: 0.5em;
+/* ------------------------- PRISM.CSS, for code highlighting ----------------------- */
+
+code {
+    display: inline-block;
+    color: black;
+    background: #f5f2f0;
+    padding: 0px;
+    text-shadow: 0 1px white;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 10pt;
+    text-align: left;
+    vertical-align: middle;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.45;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+
+    overflow-x: auto;
 }
 
-body > #center-horizontal-container > #section-2-features > .feature > ul {
-    padding-left: 2em;
-}
-
-body > #center-horizontal-container > #section-2-features > .feature#introduction {
-    margin-bottom: 400px;
-}
-
-@media screen and (max-width:720px) {
-    body > #center-horizontal-container > #section-2-features > .feature#introduction {
-        margin-bottom: 4em;
-    }
-}
-
-body > #center-horizontal-container > #section-2-features > .feature#introduction > .standout > * {
-    position: absolute;
-    -webkit-box-shadow: 0px 0px 100px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 0px 100px 0px rgba(0,0,0,0.75);
-    box-shadow: 0px 0px 100px 0px rgba(0,0,0,0.75);
-}
-
-@media screen and (min-width:720px) {
-    body > #center-horizontal-container > #section-2-features > .feature#introduction > .standout > #calculator {
-        /* border-radius: 15px; */
-        right: -50px;
-        bottom: -50px;
-        width: 32%;
-    }
-
-    body > #center-horizontal-container > #section-2-features > .feature#introduction > .standout > #screenshot {
-        right: 75px;
-        bottom: -377px;
-        width: 50%;
-        height: auto;
-    }
-
-    body > #center-horizontal-container > #section-2-features > .feature#introduction > .standout > #linux_screenshot {
-        border-radius: 3px;
-        right: -208px;
-        bottom: -506px;
-        width: 60%;
-        z-index: 1;
-        height: auto;
+@media print {
+    code[class*="language-"] {
+        text-shadow: none;
     }
 }
 
-@media screen and (max-width:720px) {
-    body > #center-horizontal-container > #section-2-features > .feature#introduction > .standout > #calculator,
-    body > #center-horizontal-container > #section-2-features > .feature#introduction > .standout > #screenshot,
-    body > #center-horizontal-container > #section-2-features > .feature#introduction > .standout > #linux_screenshot {
-        display: none;
-    }
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+    color: slategray;
 }
 
-footer {
-    padding: 2em;
+.token.punctuation {
+    color: #999;
+}
+
+.namespace {
+    opacity: .7;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+    color: #905;
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+    color: #690;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+    color: #9a6e3a;
+    background: hsla(0, 0%, 100%, .5);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+    color: #07a;
+}
+
+.token.function,
+.token.class-name {
+    color: #DD4A68;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+    color: #e90;
+}
+
+.token.important,
+.token.bold {
+    font-weight: bold;
+}
+
+.token.italic {
+    font-style: italic;
+}
+
+.token.entity {
+    cursor: help;
+}
+
+@media print {
+  aside { display: none !important; }
+  a[href]:after {
+    content: none !important;
+  }
 }

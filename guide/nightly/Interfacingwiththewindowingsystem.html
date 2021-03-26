@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Interfacing with the windowing system</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="description" content="Cross-platform MIT-licensed desktop GUI framework for C and Rust using the Mozilla WebRender rendering engine">
+  <meta name="keywords" content="gui, rust, user interface">
+
+  <link rel="preload" as="font" href="fonts/SourceSerifPro-Regular.ttf" type="font/ttf">
+  <link rel="preload" as="font" href="fonts/Morris Jenson Initialen.ttf" type="font/ttf">
+
+  <link rel="shortcut icon" type="image/x-icon" href="../../favicon.ico">
+  <link rel="stylesheet" type="text/css" href="../../main.css">
+  <style>
+        main > div { max-width: 80ch; }
+        main > div > p { margin-left: 10px; margin-top: 10px; }
+        main p, main a, main strong { font-family: "Source Serif Pro", serif; font-size: 16px; }
+        main > div > h3 { margin: 10px; }
+        main .warning h4 { margin-bottom: 10px; }
+        main .warning {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px dashed #facb26;
+            margin: 10px;
+            background: #fff8be;
+            color: #222;
+            box-shadow: 0px 0px 20px #facb2655;
+        }
+        main code.expand { display: block; margin-top: 20px; padding: 10px; border-radius: 5px; }
+        </style>
+</head>
+
+<body>
+  <div class="center">
+  <aside>
+    <header>
+      <h1 style="display:none;">Azul GUI Framework</h1>
+      <a href="../../">
+        <img src="../../logo.svg">
+      </a>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="../../index.html">overview</a></li>
+        <li>
+          <a href="../../releases.html">releases</a>
+          
+        </li>
+        <li><a href="https://github.com/maps4print/azul">code</a></li>
+        <li><a href="https://matrix.to/#/#azul:matrix.org">matrix chat</a></li>
+        <li>
+          <a href="../../guide.html">guide</a>
+          <ul><li><a href="./Installation.html">Installation</a></li><li><a href="./GettingStarted.html">Getting Started</a></li><li><a href="./Asimplecounter.html">A simple counter</a></li><li><a href="./RefAnyanddatabinding.html">RefAny and data binding</a></li><li><a href="./StylingyourapplicationwithCSS.html">Styling your application with CSS</a></li><li><a href="./SVGdrawing.html">SVG drawing</a></li><li><a href="./Timers,ThreadsandAnimations.html">Timers, Threads and Animations</a></li><li><a href="./Interfacingwiththewindowingsystem.html">Interfacing with the windowing system</a></li><li><a href="./OpenGLdrawing.html">OpenGL drawing</a></li><li><a href="./Unittesting.html">Unit testing</a></li><li><a href="./XMLtoRustcompilation.html">XML to Rust compilation</a></li></ul>
+        </li>
+        <li>
+          <a href="../../api.html">api</a>
+          
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <main>
+    <h1>Interfacing with the windowing system</h1>
+    <div>
+      ## Updating window properties
+
+You may also have noticed that the callback takes in a `AppState<DataModel>`,
+not the `DataModel` directly. This is because you can change the window
+settings, for example the title of the window:
+
+```rust
+fn callback(app_state: &mut AppState<DataModel>, _: WindowEvent) -> UpdateScreen {
+    app_state.windows[window_id].window.title = "Hello";
+    app_state.windows[window_id].window.menu += "&Application > &Quit\tAlt+F4";
+}
+```
+
+Note how there isn't any `.get_title()` or `.set_title()`. Simply setting the
+title is enough to invoke the (stateful) Win32 / X11 / Wayland / Cocoa functions
+for setting the window title. You can query the active title / mouse or keyboard
+state in the same way.
+    </div>
+  </main>
+  </div>
+  <script async type="text/javascript" src="../../prism_code_highlighter.js"></script>
+</body>
+</html>
