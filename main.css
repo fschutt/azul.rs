@@ -68,10 +68,10 @@ aside {
   box-sizing: border-box;
   position: sticky;
   top: 0;
-  z-index: -1;
 }
 
 @media screen and (max-width: 720px) {
+  aside {  z-index: -1; }
   body main { padding: 37.5px; clear: both; }
   body .center aside { min-height: 150px; min-width: 100%; padding: 25px; }
   body .center aside header { display: inline-block; width: 75px; height: 75px; padding: 12.5px; }
