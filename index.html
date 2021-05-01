@@ -5,7 +5,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-  <meta name="description" content="Cross-platform MIT-licensed desktop GUI framework for C and Rust using the Mozilla WebRender rendering engine">
+  <meta name="description" content="Cross-platform LGPL-licensed desktop GUI framework for C and Rust using the Mozilla WebRender rendering engine">
   <meta name="keywords" content="gui, rust, user interface">
 
   <link rel="preload" as="font" href="./fonts/SourceSerifPro-Regular.ttf" type="font/ttf">
@@ -15,8 +15,11 @@
   <link rel="stylesheet" type="text/css" href="./main.css">
   <!-- index.css -->
   <style>
-    main header {
+    main .col-1 {
+      float:left;
       max-width: 500px;
+    }
+    main header {
       margin-bottom: 30px;
     }
     main header h2 {
@@ -42,13 +45,19 @@
       float: left;
       margin-right: 25px;
     }
-    main section .col-2 {
-      overflow: hidden;
-      max-width: 500px;
-      float: right;
-    }
     body > .center > main > section > .col-1 code {
       display: block;
+      max-width: 500px;
+    }
+    @media screen and (max-width: 720px) {
+      body > .center > main > code {
+        min-width: none;
+      }
+    }
+    @media screen and (min-width: 720px) {
+      body > .center > main > code {
+        min-width: 500px;
+      }
     }
     @media screen and (max-width: 720px) {
       body > .center > main > section > .col-2 {
@@ -65,21 +74,43 @@
         float: none;
         position: static !important;
       }
+      body main .col-1 header h2 {
+        font-size: 30px;
+        margin-bottom: 0px;
+      }
+      .feature {
+        float:none;
+        margin-bottom: 50px;
+      }
     }
-    main section .col-2 img {
-      max-width: 100%;
-      margin-bottom: 10px;
-      height: auto;
-    }
-    main section .col-2 .stats {
-      float: left;
-      list-style-type: none;
+
+    .stats {
       font-weight: bold;
+      float: left;
     }
-    main section .col-2 .controls {
+    .stats ul li {
+      list-style-type: none;
+    }
+    .controls:after {
+      clear: both;
+    }
+    .controls > span:first-child > button > img {
+      padding-left: 10px;
+    }
+
+    .controls > span:last-child > button > img {
+      padding-left: 10px;
+      transform: rotate(180deg);
+    }
+
+    .controls > span > button > img {
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .controls {
       overflow: hidden;
     }
-    main section .col-2 .controls > * {
+    .controls > * {
       float: right;
       margin-left: 10px;
     }
@@ -89,7 +120,7 @@
       background: radial-gradient(ellipse farthest-corner at right bottom,#fedb37 0,#fdb931 8%,#9f7928 30%,#8a6e2f 40%,transparent 80%),
                   radial-gradient(ellipse farthest-corner at left top,#fff 0,#ffffac 8%,#d1b464 25%,#5d4a1f 62.5%,#5d4a1f 100%);
     }
-    main section .col-2 .controls .gradient-border-wrap button {
+    .controls .gradient-border-wrap button {
       background: #333;
       color: #eee;
       cursor: pointer;
@@ -102,8 +133,20 @@
     }
     .description {
       clear: both;
-      margin-top: 50px;
-      font-size: 0.9em;
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+
+    .feature > img {
+      max-width: 100%;
+      margin-bottom: 10px;
+      height: auto;
+    }
+
+    body > .center > main > code {
+      display: block;
+      padding: 20px;
+      max-width: 500px;
     }
   </style>
 </head>
@@ -120,50 +163,66 @@
         <li class="active"><a href="./index.html">overview</a></li>
         <li><a href="./releases.html">releases</a></li>
         <li><a href="https://github.com/maps4print/azul">code</a></li>
-        <li><a href="https://matrix.to/#/#azul:matrix.org">matrix chat</a></li>
+        <li><a href="https://matrix.to/#/#azul:matrix.org">chat</a></li>
         <li><a href="./guide.html">guide</a></li>
         <li><a href="./api.html">api</a></li>
       </ul>
     </nav>
   </aside>
   <main>
-    <header>
-      <h2><span class="first-letter">B</span>uilt for beauty<br/>and speed</h2>
-      <h3>Cross-platform MIT-licensed desktop GUI framework for C and Rust, backed by the Mozilla WebRender rendering engine.</h3>
-    </header>
-    <section class="feature" id="main">
-      <div class="col-1"><code class="language-c"><pre style="font-family:monospace !important">#include &lt;azul.h&gt;
-#include &lt;azul-widgets.h&gt;
-
-int main() { return 0; }</pre></code>      </div>      <div class="col-2">        <img class="showcase" id="table", src="/images/table.png" alt="Rendering a table using the Azul GUI toolkit" />        <div>          <div class="stats">            <ul>              <li>Memory: 23MB</li>              <li>CPU: 0%</li>            </ul>          </div>          <div class="controls">            <span class="gradient-border-wrap">              <button onclick="next()">Next&nbsp;&nbsp;&nbsp;&nbsp;<i class="flower" style="transform: rotate(30deg);display:inline-block;">#</i></button>            </span>            <span class="gradient-border-wrap">              <button onclick="previous()"><i class="flower horizontal-flip" style="transform: scaleX(-1) rotate(30deg);display:inline-block;">#</i>&nbsp;&nbsp;&nbsp;&nbsp;Previous</button>            </span>          </div>        </div>        <div class="description" style="font-size:1.2em;">          <p>
-                Azul can render infinitely large datasets (such as a table, shown here)
-                while using a comparably small amount of memory.<br/>
-                Users can specify special IFrameCallbacks that - given the size and scroll position
-                of the DOM node - only return the currently visible cells. All cells can share their
-                CSS style efficiently via pointers, so that properties do not get duplicated in memory.
-            </p>        </div>      </div>
-    </section>
+    <div class="col-1">
+      <header>
+        <h2><span class="first-letter">B</span>uilt for beauty<br/>and speed</h2>
+        <h3>Cross-platform LGPL-licensed desktop GUI framework for C and Rust, backed by the Mozilla WebRender rendering engine.</h3>
+      </header>
+      <section class="feature">
+        <img class="showcase" id="showcase-image" src="https://azul.rs/images/helloworld.png" alt="Rendering a simple UI using the Azul GUI toolkit">
+        <div>
+          <div class="stats">
+            <ul>
+              <li id="showcase-stats-memory">Memory: 23MB</li>
+              <li id="showcase-stats-cpu">CPU: 0%</li>
+            </ul>
+          </div>
+          <div class="controls">
+            <span class="gradient-border-wrap">
+              <button onclick="next()">Next<img src="./images/fleur-de-lis.svg"/></button>
+            </span>
+            <span class="gradient-border-wrap">
+              <button onclick="previous()"><img src="./images/fleur-de-lis.svg"/>Previous</button>
+            </span>
+          </div>
+          <div class="description">
+            <p id="showcase-description">The UI structure is created via composition instead of inheritance.                Callbacks can modify the application data and then tell the framework to                reconstruct the entire UI again if necessary - not on every frame.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+    <code class="language-c" id="code">
+      
+    </code>
   </main>
   </div>
   <script async type="text/javascript" src="./prism_code_highlighter.js"></script>
   <script type="text/javascript" async>
     var examples = [
-      "<div class=\"col-1\"><code class=\"language-c\"><pre style=\"font-family:monospace !important\">#include&nbsp;&lt;azul.h&gt;<br/>#include&nbsp;&lt;azul-widgets.h&gt;<br/><br/>int&nbsp;main()&nbsp;{&nbsp;return&nbsp;0;&nbsp;}</pre></code>      </div>      <div class=\"col-2\">        <img class=\"showcase\" id=\"table\", src=\"/images/table.png\" alt=\"Rendering a table using the Azul GUI toolkit\" />        <div>          <div class=\"stats\">            <ul>              <li>Memory: 23MB</li>              <li>CPU: 0%</li>            </ul>          </div>          <div class=\"controls\">            <span class=\"gradient-border-wrap\">              <button onclick=\"next()\">Next&nbsp;&nbsp;&nbsp;&nbsp;<i class=\"flower\" style=\"transform: rotate(30deg);display:inline-block;\">#</i></button>            </span>            <span class=\"gradient-border-wrap\">              <button onclick=\"previous()\"><i class=\"flower horizontal-flip\" style=\"transform: scaleX(-1) rotate(30deg);display:inline-block;\">#</i>&nbsp;&nbsp;&nbsp;&nbsp;Previous</button>            </span>          </div>        </div>        <div class=\"description\" style=\"font-size:1.2em;\">          <p>                Azul can render infinitely large datasets (such as a table, shown here)                while using a comparably small amount of memory.<br/>                Users can specify special IFrameCallbacks that - given the size and scroll position                of the DOM node - only return the currently visible cells. All cells can share their                CSS style efficiently via pointers, so that properties do not get duplicated in memory.            </p>        </div>      </div>",
-"<div class=\"col-1\"><code class=\"language-c\"><pre style=\"font-family:monospace !important\"></pre></code>      </div>      <div class=\"col-2\">        <img class=\"showcase\" id=\"helloworld\", src=\"/images/helloworld.png\" alt=\"Rendering a simple UI using the Azul GUI toolkit\" />        <div>          <div class=\"stats\">            <ul>              <li>Memory: 23MB</li>              <li>CPU: 0%</li>            </ul>          </div>          <div class=\"controls\">            <span class=\"gradient-border-wrap\">              <button onclick=\"next()\">Next&nbsp;&nbsp;&nbsp;&nbsp;<i class=\"flower\" style=\"transform: rotate(30deg);display:inline-block;\">#</i></button>            </span>            <span class=\"gradient-border-wrap\">              <button onclick=\"previous()\"><i class=\"flower horizontal-flip\" style=\"transform: scaleX(-1) rotate(30deg);display:inline-block;\">#</i>&nbsp;&nbsp;&nbsp;&nbsp;Previous</button>            </span>          </div>        </div>        <div class=\"description\" style=\"font-size:1.2em;\">          <p>                The UI structure is created via composition instead of inheritance,                with a functional UI to View mapping. Callbacks can modify the application                data and then tell the framework to reconstruct the entire UI again.                Since azul gives the programmer the tool to render only the visible UI objects,                the performance of reconstructing the UI is very managable (~100 µs for a simple UI).            </p>        </div>      </div>",
-"<div class=\"col-1\"><code class=\"language-c\"><pre style=\"font-family:monospace !important\"></pre></code>      </div>      <div class=\"col-2\">        <img class=\"showcase\" id=\"svg\", src=\"/images/svg.png\" alt=\"Rendering a SVG file using the Azul GUI toolkit\" />        <div>          <div class=\"stats\">            <ul>              <li>Memory: 23MB</li>              <li>CPU: 0%</li>            </ul>          </div>          <div class=\"controls\">            <span class=\"gradient-border-wrap\">              <button onclick=\"next()\">Next&nbsp;&nbsp;&nbsp;&nbsp;<i class=\"flower\" style=\"transform: rotate(30deg);display:inline-block;\">#</i></button>            </span>            <span class=\"gradient-border-wrap\">              <button onclick=\"previous()\"><i class=\"flower horizontal-flip\" style=\"transform: scaleX(-1) rotate(30deg);display:inline-block;\">#</i>&nbsp;&nbsp;&nbsp;&nbsp;Previous</button>            </span>          </div>        </div>        <div class=\"description\" style=\"font-size:1.2em;\">          <p>                Azul renders everything using GPU-accelerated rectangles by default -                however, it allows users to tesselate and paint custom shapes on OpenGL                textures and use those textures as clip masks. Clip masks can be                animated via Timers as well as rendered on a non-main thread.            </p>        </div>      </div>",
-"<div class=\"col-1\"><code class=\"language-c\"><pre style=\"font-family:monospace !important\"></pre></code>      </div>      <div class=\"col-2\">        <img class=\"showcase\" id=\"calculator\", src=\"/images/calculator.png\" alt=\"Composing widgets via functions in the Azul GUI toolkit\" />        <div>          <div class=\"stats\">            <ul>              <li>Memory: 23MB</li>              <li>CPU: 0%</li>            </ul>          </div>          <div class=\"controls\">            <span class=\"gradient-border-wrap\">              <button onclick=\"next()\">Next&nbsp;&nbsp;&nbsp;&nbsp;<i class=\"flower\" style=\"transform: rotate(30deg);display:inline-block;\">#</i></button>            </span>            <span class=\"gradient-border-wrap\">              <button onclick=\"previous()\"><i class=\"flower horizontal-flip\" style=\"transform: scaleX(-1) rotate(30deg);display:inline-block;\">#</i>&nbsp;&nbsp;&nbsp;&nbsp;Previous</button>            </span>          </div>        </div>        <div class=\"description\" style=\"font-size:1.2em;\">          <p>                Composing larger UIs is just a matter of proper function composition.                Each function returns a styled DOM tree that can be composed into                the larger UI. Widgets can also store their widget-specific data on a                DOM node itself (similar to a HTML <code>dataset</code> attribute) and                provide default callbacks for common UI interactions by rendering the                entire state.            </p>        </div>      </div>",
-"<div class=\"col-1\"><code class=\"language-c\"><pre style=\"font-family:monospace !important\"></pre></code>      </div>      <div class=\"col-2\">        <img class=\"showcase\" id=\"xml\", src=\"/images/xml.png\" alt=\"XML UI hot-reloading for fast prototyping\" />        <div>          <div class=\"stats\">            <ul>              <li>Memory: 23MB</li>              <li>CPU: 0%</li>            </ul>          </div>          <div class=\"controls\">            <span class=\"gradient-border-wrap\">              <button onclick=\"next()\">Next&nbsp;&nbsp;&nbsp;&nbsp;<i class=\"flower\" style=\"transform: rotate(30deg);display:inline-block;\">#</i></button>            </span>            <span class=\"gradient-border-wrap\">              <button onclick=\"previous()\"><i class=\"flower horizontal-flip\" style=\"transform: scaleX(-1) rotate(30deg);display:inline-block;\">#</i>&nbsp;&nbsp;&nbsp;&nbsp;Previous</button>            </span>          </div>        </div>        <div class=\"description\" style=\"font-size:1.2em;\">          <p>                For fast protoyping, Azul contains an XML description language                that can create a UI from XML / CSS on-the-fly. Azul can watch and                hot-reload files - without needing to restart the application.                The XML can afterwards <strong>transpiled to native Code</strong>                in order to create reusable widgets.            </p>        </div>      </div>",
-
+      [{"id": "helloworld", "description": "The UI structure is created via composition instead of inheritance.                Callbacks can modify the application data and then tell the framework to                reconstruct the entire UI again if necessary - not on every frame.", "screenshot_path": "/home/felix/Development/azul/examples/assets/screenshots/helloworld.png", "screenshot_url": "https://azul.rs/images/helloworld.png", "cpu": "CPU: 0%", "memory": "Memory: 23MB", "image_alt": "Rendering a simple UI using the Azul GUI toolkit", "code": ""}, {"id": "table", "description": "Azul supports lazy loading and can render infinitely large datasets                (such as a table, shown here) while using a comparably small amount of memory.                DOM nodes share their CSS style efficiently via pointers,                so that properties do not get duplicated in memory.", "screenshot_path": "/home/felix/Development/azul/examples/assets/screenshots/table.png", "screenshot_url": "https://azul.rs/images/table.png", "cpu": "CPU: 0%", "memory": "Memory: 23MB", "image_alt": "Rendering a table using the Azul GUI toolkit", "code": "#include&nbsp;&lt;azul.h&gt;<br/>#include&nbsp;&lt;azul-widgets.h&gt;<br/><br/>int&nbsp;main()&nbsp;{&nbsp;return&nbsp;0;&nbsp;}"}, {"id": "svg", "description": "Azul contains a SVG1.1 compatible SVG renderer as well as functions                for tesselating and drawing shapes to OpenGL textures. Images / textures                can be composited as clip masks and even be animated.", "screenshot_path": "/home/felix/Development/azul/examples/assets/screenshots/svg.png", "screenshot_url": "https://azul.rs/images/svg.png", "cpu": "CPU: 0%", "memory": "Memory: 23MB", "image_alt": "Rendering a SVG file using the Azul GUI toolkit", "code": ""}, {"id": "calculator", "description": "Composing larger UIs is just a matter of proper function composition.                Widget-specific data is either stored on the callback object itself -                or on the DOM node, similar to a HTML 'dataset' attribute.", "screenshot_path": "/home/felix/Development/azul/examples/assets/screenshots/calculator.png", "screenshot_url": "https://azul.rs/images/calculator.png", "cpu": "CPU: 0%", "memory": "Memory: 23MB", "image_alt": "Composing widgets via functions in the Azul GUI toolkit", "code": ""}, {"id": "xml", "description": "Azul contains an XML-based UI description which can be instantly                hot-reloaded from a file. After prototyping the UI in XML / CSS,                you can compile the code to a native language in order to get both                fast design iteration times as well as performant code.", "screenshot_path": "/home/felix/Development/azul/examples/assets/screenshots/xml.png", "screenshot_url": "https://azul.rs/images/xml.png", "cpu": "Memory: 0%", "memory": "Memory: 23MB", "image_alt": "XML UI hot-reloading for fast prototyping", "code": ""}]
     ];
     var current_example = 0;
+    var max_len = examples[0].length;
 
     function render_example() {
-      document.getElementById("main").innerHTML = examples[current_example];
+      document.getElementById("code").innerHTML = examples[0][current_example].code;
+      document.getElementById("showcase-image").src = examples[0][current_example].screenshot_url;
+      document.getElementById("showcase-image").alt = examples[0][current_example].image_alt;
+      document.getElementById("showcase-stats-memory").innerHTML = examples[0][current_example].memory;
+      document.getElementById("showcase-stats-cpu").innerHTML = examples[0][current_example].cpu;
+      document.getElementById("showcase-description").innerHTML = examples[0][current_example].description;
     }
 
     function next() {
       current_example += 1;
-      if (current_example >= examples.length) {
+      if (current_example >= max_len) {
         current_example = 0;
       }
       render_example();
@@ -172,7 +231,7 @@ int main() { return 0; }</pre></code>      </div>      <div class="col-2">      
     function previous() {
       current_example -= 1;
       if (current_example < 0) {
-        current_example = examples.length;
+        current_example = max_len - 1;
       }
       render_example();
     }
