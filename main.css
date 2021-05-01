@@ -71,7 +71,7 @@ aside {
 }
 
 @media screen and (max-width: 720px) {
-  aside {  z-index: -1; }
+  aside { position: static; }
   body main { padding: 37.5px; clear: both; }
   body .center aside { min-height: 150px; min-width: 100%; padding: 25px; }
   body .center aside header { display: inline-block; width: 75px; height: 75px; padding: 12.5px; }
@@ -136,7 +136,6 @@ main {
   padding: 50px;
   box-sizing: border-box;
   min-height: 100%;
-  z-index: 1;
 }
 
 @media print {
