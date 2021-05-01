@@ -68,6 +68,7 @@ aside {
   box-sizing: border-box;
   position: sticky;
   top: 0;
+  z-index: -1;
 }
 
 @media screen and (max-width: 720px) {
