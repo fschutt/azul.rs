@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Notes for C++</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="description" content="Cross-platform MIT-licensed desktop GUI framework for C and Rust using the Mozilla WebRender rendering engine">
+  <meta name="keywords" content="gui, rust, user interface">
+
+  <link rel="preload" as="font" href="fonts/SourceSerifPro-Regular.ttf" type="font/ttf">
+  <link rel="preload" as="font" href="fonts/Morris Jenson Initialen.ttf" type="font/ttf">
+
+  <link rel="shortcut icon" type="image/x-icon" href="https://azul.rs/favicon.ico">
+  <link rel="stylesheet" type="text/css" href="https://azul.rs/main.css">
+  <style>
+        main > div { max-width: 80ch; }
+        main > div > p { margin-left: 10px; margin-top: 10px; }
+        main p, main a, main strong { font-family: "Source Serif Pro", serif; font-size: 16px; }
+        main > div > h3 { margin: 10px; }
+        main .warning h4 { margin-bottom: 10px; }
+        main .warning {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px dashed #facb26;
+            margin: 10px;
+            background: #fff8be;
+            color: #222;
+            box-shadow: 0px 0px 20px #facb2655;
+        }
+        main code.expand { display: block; margin-top: 20px; padding: 10px; border-radius: 5px; }
+        </style>
+  <!--
+  <script type="text/javascript">
+    setTimeout("location.reload(true);", 2999);
+  </script>
+-->
+</head>
+
+<body>
+  <div class="center">
+  <aside>
+    <header>
+      <h1 style="display:none;">Azul GUI Framework</h1>
+      <a href="https://azul.rs/">
+        <img src="https://azul.rs/logo.svg">
+      </a>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="https://azul.rs">overview</a></li>
+        <li>
+          <a href="https://azul.rs/releases">releases</a>
+        </li>
+        <li><a href="https://github.com/fschutt/azul">code</a></li>
+        <li><a href="https://matrix.to/#/#azul-gui:matrix.org">chat</a></li>
+        <li>
+          <a href="https://azul.rs/guide">guide</a>
+        </li>
+        <li>
+          <a href="https://azul.rs/api">api</a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+  <main>
+    <h1>Notes for C++</h1>
+    <div>
+      
+
+    <h3><a href="#remarks-cpp" id="remarks-cpp">C++</a></h3>
+    <br/>
+    <p>1. Like in Python, default constructors of classes take the arguments in the order or the fields:</p>
+    <code class="expand">// API: struct ColorU { r: u8, g: u8, b: u8 a: u8 }
+// therefore the arguments to the default constructor are passed in order:
+auto color = ColorU(/*r*/ 255, /*g*/ 255, /*b*/ 255, /*a*/ 255);</code><br/>
+    <p>2. Explicit constructors are static functions, enums use <code>enum class</code> (C++11):</p>
+    <code class="expand">auto window = WindowCreateOptions::default(LayoutSolver::Default);</code><br/>
+    <p>3. All by-value arguments require <code>std::move</code> in order to prevent accidental copies:</p>
+    <code class="expand">auto window = WindowCreateOptions::default(LayoutSolver::Default);
+app.run(std::move(window));</code><br/>
+    <p>4. In difference to C, constructing a <code>RefAny</code> does not require macros, instead generics are used:</p>
+    <code class="expand">class MyStruct {
+    int field;
+    public:
+        MyStruct(int f) noexcept: field(f) { }
+}
+
+auto object = RefAny::new(std::move(MyStruct(5)));
+auto objectref = object.downcastRef&lt;MyStruct&gt;();
+if (objectref): // objectref = std::optional&lt;Ref&lt;MyStruct&gt;&gt;
+    std::cout << objectref->ptr.field << std::endl;
+objectref.delete(); // release reference
+
+auto objectrefmut = object.downcastRefMut&lt;MyStruct&gt;();
+if (objectrefmut):// objectrefmut = std::optional&lt;RefMut&lt;MyStruct&gt;&gt;
+    std::cout << objectrefmut->ptr.field << std::endl;
+objectrefmut.delete(); // release reference
+
+// "object" RefAny destructor automatically decreases refcount here</code><br/>
+    <p>5. All <code>*Vec</code> types have a <code>_fromStdVector()</code> function
+        that converts a <code>std::vector</code>
+        into the given <code>Vec</code> type <strong>without copying the contents of the array</strong>.
+        Additionally a <code>_fromStdString</code> function exists
+        to convert a <code>std::string</code> into a <code>String</code>
+        type. All strings are UTF-8 encoded.
+    </p>
+    <code class="expand">auto scancodes = std::vector{0,1,2,3};
+auto converted = ScanCodeVec::fromStdVector(std::move(scancodes));
+auto converted_back = converted.intoStdVector();
+</code><br/>
+    <p>6. Like in C, all <code>union enums</code> have special functions to emulate pattern matching:</p>
+    <code class="expand">// create a union enum - Exact() is a constexpr function
+auto cursor = StyleCursorValue::Exact(StyleCursor::Grab);
+
+// destructure a union enum
+if (auto result = cursor.matchRefExact()) {
+    // result = const StyleCursor*
+    std::cout << result << std::endl;
+}
+
+if (auto result = cursor.matchRefMutExact()) {
+    // result = StyleCursor* restrict
+    *result = StyleCursor::Default;
+}</code><br/>
+    </div>
+  </main>
+  </div>
+  <script async type="text/javascript" src="https://azul.rs/prism_code_highlighter.js"></script>
+</body>
+</html>
