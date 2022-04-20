@@ -1,12 +1,12 @@
 @media screen {
   @font-face {
       font-family: "EB Garamond SemiBold";
-      src: url("./fonts/EB-Garamond-SemiBold.ttf");
+      src: url("./fonts/EBGaramond-SemiBold.ttf");
   }
 
   @font-face {
       font-family: "EB Garamond";
-      src: url("./fonts/EB-Garamond-Medium.ttf");
+      src: url("./fonts/EBGaramond-Medium.ttf");
   }
 
   @font-face {
